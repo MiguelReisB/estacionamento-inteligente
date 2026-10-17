@@ -194,10 +194,7 @@ public class Tela_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-        jLabel4MouseExited.setForeground(java.awt.Color.WHITE);
-
-        jLabel4MouseExited.setCursor(
-        new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseExited
 
     /**
