@@ -4,6 +4,13 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author henri
@@ -27,26 +34,51 @@ public class Tela_Login extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 204, 255));
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jLabel1.setText("Usuário");
+
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+
+        jLabel2.setText("Senha");
+
+        jButton1.setBackground(new java.awt.Color(36, 105, 224));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Login ");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setBackground(new java.awt.Color(212, 45, 73));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Sair");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setText("LOGIN DE USUÁRIO");
 
         jLabel4.setForeground(new java.awt.Color(36, 105, 224));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Cadastrar Usuário");
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -58,130 +90,107 @@ public class Tela_Login extends javax.swing.JFrame {
                 jLabel4MouseExited(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
-        jPanel1.add(jLabel4, gridBagConstraints);
-
-        jLabel1.setText("Usuário");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 22;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
-        jPanel1.add(jLabel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 136;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
-        jPanel1.add(jPasswordField1, gridBagConstraints);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setText("LOGIN DE USUÁRIO");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 6);
-        jPanel1.add(jLabel3, gridBagConstraints);
-
-        jLabel2.setText("Senha");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
-        jPanel1.add(jLabel2, gridBagConstraints);
-
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 136;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
-        jPanel1.add(jTextField2, gridBagConstraints);
-
-        jButton2.setBackground(new java.awt.Color(212, 45, 73));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Sair");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 6, 0);
-        jPanel1.add(jButton2, gridBagConstraints);
-
-        jButton1.setBackground(new java.awt.Color(36, 105, 224));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Login ");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = 51;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(32, 10, 0, 0);
-        jPanel1.add(jButton1, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField2))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(129, 129, 129))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addGap(6, 6, 6)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_jButton2MouseClicked
-
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        Tela_Principal principal = new Tela_Principal();
-        principal.setVisible(true);
-        this.dispose();
+        String url = "jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&serverTimezone=UTC";
+        String usuario = "root"; // Substitua pelo seu usuário do MySQL
+        String senha = "123456"; // Substitua pela sua senha do MySQL
+        
+        String sql = "SELECT * FROM usuarios where nome='"+jTextField2.getText()+"' and senha='"+jPasswordField1.getText()+"'";
+        
+        if(jTextField2.getText().length() == 0){
+            JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
+            return;
+        }
+        else if(jPasswordField1.getText().length() == 0){
+            JOptionPane.showMessageDialog(null, "Senha vazia");
+            return;
+        }
+        
+        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); 
+                PreparedStatement dec_sql = conexao.prepareStatement(sql); 
+                ResultSet rslogin = dec_sql.executeQuery()) {
+            
+            if(rslogin.next()){
+                Tela_Principal principal = new Tela_Principal();
+                principal.setVisible(true);
+                this.dispose();  
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Senha ou Usuário inválido");
+            }
+            
+        }
+
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ou consultar o banco de dados: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         Tela_Cadastro cadastro = new Tela_Cadastro();
@@ -190,11 +199,11 @@ public class Tela_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-        // TODO add your handling code here:
+        jLabel4.setText("<html><u>Cadastrar Usuário</u></html>");
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-        // TODO add your handling code here:
+        jLabel4.setText("Cadastrar Usuário");
     }//GEN-LAST:event_jLabel4MouseExited
 
     /**
@@ -229,7 +238,6 @@ public class Tela_Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
