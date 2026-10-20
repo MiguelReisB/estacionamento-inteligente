@@ -5,5 +5,5 @@ Integrantes:
 Henrique Antunes Nogueira - 192512318
 Bruno Carvalho Vieira - 192510091
 Miguel - 192613005
-Luis Felipe Silva Dultra - 192512431
-Larissa
+Luis Felipe Silva Dutra - 192512431
+Laryssa - 192513729
