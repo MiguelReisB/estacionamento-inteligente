@@ -8,7 +8,7 @@ package com.mycompany.mavenproject1;
  *
  * @author henri
  */
-public class Mavenproject1 {
+public class EstacionamentoInteligente {
 
     public static void main(String[] args) {
         Tela_Login login = new Tela_Login();
