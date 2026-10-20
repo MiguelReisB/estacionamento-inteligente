@@ -145,37 +145,36 @@ public class Tela_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String url = "jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&serverTimezone=UTC";
-        String usuario = "root"; // Substitua pelo seu usuário do MySQL
-        String senha = "123456"; // Substitua pela sua senha do MySQL
-        
-        String sql = "SELECT * FROM usuarios where nome='"+jTextField2.getText()+"' and senha='"+jPasswordField1.getText()+"'";
-        
         if(jTextField2.getText().length() == 0){
-            JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
-            return;
+        JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
+        return;
         }
         else if(jPasswordField1.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "Senha vazia");
             return;
         }
-        
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); 
-                PreparedStatement dec_sql = conexao.prepareStatement(sql); 
-                ResultSet rslogin = dec_sql.executeQuery()) {
-            
-            if(rslogin.next()){
-                Tela_Principal principal = new Tela_Principal();
-                principal.setVisible(true);
-                this.dispose();  
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Senha ou Usuário inválido");
-            }
-            
-        }
 
-        catch (SQLException e) {
+
+        String sql = "SELECT * FROM usuarios WHERE nome=? AND senha=?";
+
+
+        try (Connection conexao = util.FabricaConexao.getConexao();
+             PreparedStatement dec_sql = conexao.prepareStatement(sql)) {
+
+
+            dec_sql.setString(1, jTextField2.getText());
+            dec_sql.setString(2, jPasswordField1.getText());
+
+            try (ResultSet rslogin = dec_sql.executeQuery()) {
+                if(rslogin.next()){
+                    Tela_Principal principal = new Tela_Principal();
+                    principal.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senha ou Usuário inválido");
+                }
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ou consultar o banco de dados: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1MouseClicked
