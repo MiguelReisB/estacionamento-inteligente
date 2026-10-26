@@ -37,55 +37,55 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        lblCadastroUsuario = new javax.swing.JLabel();
+        lblNomeUsuario = new javax.swing.JLabel();
+        txtNomeUsuario = new javax.swing.JTextField();
+        lblSenha = new javax.swing.JLabel();
+        snhSenha = new javax.swing.JPasswordField();
+        lblConfirmarSenha = new javax.swing.JLabel();
+        snhConfirmarSenha = new javax.swing.JPasswordField();
+        btnAvancar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Cadastro de Usuário");
+        lblCadastroUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCadastroUsuario.setText("Cadastro de Usuário");
 
-        jLabel2.setText("Nome de Usuário");
+        lblNomeUsuario.setText("Nome de Usuário");
 
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtNomeUsuario.addActionListener(this::txtNomeUsuarioActionPerformed);
 
-        jLabel4.setText("Senha");
+        lblSenha.setText("Senha");
 
-        jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
+        snhSenha.addActionListener(this::snhSenhaActionPerformed);
 
-        jLabel5.setText("Confirme sua senha");
+        lblConfirmarSenha.setText("Confirme sua senha");
 
-        jButton1.setText("Avançar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAvancar.setText("Avançar");
+        btnAvancar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                btnAvancarMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnAvancar.addActionListener(this::btnAvancarActionPerformed);
 
-        jButton2.setText("Sair");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSair.setText("Sair");
+        btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                btnSairMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnSair.addActionListener(this::btnSairActionPerformed);
 
-        jButton3.setText("↩️ Voltar");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVoltar.setText("↩️ Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                btnVoltarMouseClicked(evt);
             }
         });
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,93 +95,90 @@ public class Tela_Cadastro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(btnVoltar)
                         .addGap(142, 142, 142)
-                        .addComponent(jButton2)
+                        .addComponent(btnSair)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAvancar))
+                    .addComponent(lblNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(snhSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(snhConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblCadastroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCadastroUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNomeUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1)
+                .addComponent(txtNomeUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1)
+                .addComponent(snhSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2)
+                .addComponent(snhConfirmarSenha)
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnAvancar)
+                    .addComponent(btnSair)
+                    .addComponent(btnVoltar))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void snhSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_snhSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_snhSenhaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
         Tela_Login login = new Tela_Login();
         login.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void btnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_btnSairMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String url = "jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&serverTimezone=UTC";
-        String usuario = "root"; // Substitua pelo seu usuário do MySQL
-        String senha = "123456"; // Substitua pela sua senha do MySQL
+    private void btnAvancarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAvancarMouseClicked
         
-        String sql1 = "INSERT INTO usuarios (nome, senha) VALUES('"+jTextField1.getText()+"', '"+jPasswordField1.getText()+"')";
-        String sql2 = "SELECT * FROM usuarios where nome='"+jTextField1.getText()+"'";
+        String sql1 = "INSERT INTO usuarios (nome, senha) VALUES('"+txtNomeUsuario.getText()+"', '"+snhSenha.getText()+"')";
+        String sql2 = "SELECT * FROM usuarios where nome='"+txtNomeUsuario.getText()+"'";
         
-        if(jTextField1.getText().length() == 0){
+        if(txtNomeUsuario.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
             return;
         }
-        else if(jPasswordField1.getText().length() == 0){
+        else if(snhSenha.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "Senha vazia");
             return;
         }
-        else if(!jPasswordField1.getText().equals(jPasswordField2.getText())){
+        else if(!snhSenha.getText().equals(snhConfirmarSenha.getText())){
             JOptionPane.showMessageDialog(null, "As senhas devem ser iguais");
             return;
         }
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); 
+        try (Connection conexao = util.FabricaConexao.getConexao(); 
                 PreparedStatement dec_sql1 = conexao.prepareStatement(sql1); 
                 PreparedStatement dec_sql2 = conexao.prepareStatement(sql2);
                 ResultSet rslogin = dec_sql2.executeQuery()) {
@@ -206,15 +203,15 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ou consultar o banco de dados: " + e.getMessage());
         }        
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_btnAvancarMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNomeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNomeUsuarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
         //        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAvancarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,15 +239,15 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton btnAvancar;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JLabel lblCadastroUsuario;
+    private javax.swing.JLabel lblConfirmarSenha;
+    private javax.swing.JLabel lblNomeUsuario;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JPasswordField snhConfirmarSenha;
+    private javax.swing.JPasswordField snhSenha;
+    private javax.swing.JTextField txtNomeUsuario;
     // End of variables declaration//GEN-END:variables
 }
