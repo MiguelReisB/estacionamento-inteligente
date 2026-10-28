@@ -35,59 +35,59 @@ public class Tela_Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblSenha = new javax.swing.JLabel();
+        snhSenha = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        lblLoginUsuario = new javax.swing.JLabel();
+        lblCadastrarUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 204, 255));
 
-        jLabel1.setText("Usuário");
+        lblUsuario.setText("Usuário");
 
-        jTextField2.addActionListener(this::jTextField2ActionPerformed);
+        txtUsuario.addActionListener(this::txtUsuarioActionPerformed);
 
-        jLabel2.setText("Senha");
+        lblSenha.setText("Senha");
 
-        jButton1.setBackground(new java.awt.Color(36, 105, 224));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Login ");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLogin.setBackground(new java.awt.Color(36, 105, 224));
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("Login ");
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                btnLoginMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnLogin.addActionListener(this::btnLoginActionPerformed);
 
-        jButton2.setBackground(new java.awt.Color(212, 45, 73));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Sair");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnSair.setBackground(new java.awt.Color(212, 45, 73));
+        btnSair.setForeground(new java.awt.Color(255, 255, 255));
+        btnSair.setText("Sair");
+        btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                btnSairMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnSair.addActionListener(this::btnSairActionPerformed);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setText("LOGIN DE USUÁRIO");
+        lblLoginUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblLoginUsuario.setText("LOGIN DE USUÁRIO");
 
-        jLabel4.setForeground(new java.awt.Color(36, 105, 224));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Cadastrar Usuário");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblCadastrarUsuario.setForeground(new java.awt.Color(36, 105, 224));
+        lblCadastrarUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCadastrarUsuario.setText("Cadastrar Usuário");
+        lblCadastrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                lblCadastrarUsuarioMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel4MouseEntered(evt);
+                lblCadastrarUsuarioMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel4MouseExited(evt);
+                lblCadastrarUsuarioMouseExited(evt);
             }
         });
 
@@ -100,111 +100,110 @@ public class Tela_Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(lblSenha)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(snhSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField2))
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(lblLoginUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtUsuario))
+                                .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSair)
+                            .addComponent(lblCadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(129, 129, 129))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblLoginUsuario)
                 .addGap(27, 27, 27)
-                .addComponent(jLabel1)
+                .addComponent(lblUsuario)
                 .addGap(6, 6, 6)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addComponent(jLabel2)
+                .addComponent(lblSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(snhSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(lblCadastrarUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnSair)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        String url = "jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&serverTimezone=UTC";
-        String usuario = "root"; // Substitua pelo seu usuário do MySQL
-        String senha = "123456"; // Substitua pela sua senha do MySQL
-        
-        String sql = "SELECT * FROM usuarios where nome='"+jTextField2.getText()+"' and senha='"+jPasswordField1.getText()+"'";
-        
-        if(jTextField2.getText().length() == 0){
-            JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
-            return;
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        if(txtUsuario.getText().length() == 0){
+        JOptionPane.showMessageDialog(null, "Nome do usuário vazio");
+        return;
         }
-        else if(jPasswordField1.getText().length() == 0){
+        else if(snhSenha.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "Senha vazia");
             return;
         }
-        
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); 
-                PreparedStatement dec_sql = conexao.prepareStatement(sql); 
-                ResultSet rslogin = dec_sql.executeQuery()) {
-            
-            if(rslogin.next()){
-                Tela_Principal principal = new Tela_Principal();
-                principal.setVisible(true);
-                this.dispose();  
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Senha ou Usuário inválido");
-            }
-            
-        }
 
-        catch (SQLException e) {
+
+        String sql = "SELECT * FROM usuarios WHERE nome=? AND senha=?";
+
+
+        try (Connection conexao = util.FabricaConexao.getConexao();
+             PreparedStatement dec_sql = conexao.prepareStatement(sql)) {
+
+
+            dec_sql.setString(1, txtUsuario.getText());
+            dec_sql.setString(2, snhSenha.getText());
+
+            try (ResultSet rslogin = dec_sql.executeQuery()) {
+                if(rslogin.next()){
+                    Tela_Principal principal = new Tela_Principal();
+                    principal.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senha ou Usuário inválido");
+                }
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ou consultar o banco de dados: " + e.getMessage());
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_btnLoginMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void btnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_btnSairMouseClicked
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void lblCadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarUsuarioMouseClicked
         Tela_Cadastro cadastro = new Tela_Cadastro();
         cadastro.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_lblCadastrarUsuarioMouseClicked
 
-    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-        jLabel4.setText("<html><u>Cadastrar Usuário</u></html>");
-    }//GEN-LAST:event_jLabel4MouseEntered
+    private void lblCadastrarUsuarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarUsuarioMouseEntered
+        lblCadastrarUsuario.setText("<html><u>Cadastrar Usuário</u></html>");
+    }//GEN-LAST:event_lblCadastrarUsuarioMouseEntered
 
-    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-        jLabel4.setText("Cadastrar Usuário");
-    }//GEN-LAST:event_jLabel4MouseExited
+    private void lblCadastrarUsuarioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastrarUsuarioMouseExited
+        lblCadastrarUsuario.setText("Cadastrar Usuário");
+    }//GEN-LAST:event_lblCadastrarUsuarioMouseExited
 
     /**
      * @param args the command line arguments
@@ -232,13 +231,13 @@ public class Tela_Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JLabel lblCadastrarUsuario;
+    private javax.swing.JLabel lblLoginUsuario;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JPasswordField snhSenha;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
