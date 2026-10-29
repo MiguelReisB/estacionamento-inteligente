@@ -10,6 +10,12 @@ import javax.swing.JFrame;
  *
  * @author henri
  */
+
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Tela_Cadastro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Tela_Cadastro.class.getName());
@@ -161,11 +167,61 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jButton2MouseClicked
-
+// testes
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        
+    String nome = jTextField1.getText().trim();
+    String email = jTextField2.getText().trim();
+    String senha = new String(jPasswordField1.getPassword());
+    String confirmarSenha = new String(jPasswordField2.getPassword());
+
+
+    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
+
+        JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+        
+        return;
+    }
+
+    if (!senha.equals(confirmarSenha)) {
+
+        JOptionPane.showMessageDialog(this, "As senhas não coincidem!");
+        
+        return;
+    }
+
+    String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+
+    try (Connection conexao = BancoDados.conectar();
+        PreparedStatement comando = conexao.prepareStatement(sql)) {
+
+        comando.setString(1, nome);
+        comando.setString(2, email);
+        comando.setString(3, senha);
+
+        comando.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+
         Tela_Login login = new Tela_Login();
         login.setVisible(true);
         this.dispose();
+
+    } 
+    catch (SQLException e) {
+
+        if ("23505".equals(e.getSQLState())) {
+            JOptionPane.showMessageDialog(
+                    this, "Este e-mail já está cadastrado!");
+        } 
+        else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Erro ao cadastrar usuário: " + e.getMessage());
+            e.printStackTrace();
+        }
+}
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**

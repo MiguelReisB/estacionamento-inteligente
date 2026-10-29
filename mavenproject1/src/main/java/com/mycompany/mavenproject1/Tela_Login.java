@@ -67,7 +67,7 @@ public class Tela_Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(6, 20, 0, 0);
         jPanel1.add(jLabel4, gridBagConstraints);
 
-        jLabel1.setText("Usuário");
+        jLabel1.setText("E-mail");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -76,6 +76,8 @@ public class Tela_Login extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
         jPanel1.add(jLabel1, gridBagConstraints);
+
+        jPasswordField1.setPreferredSize(new java.awt.Dimension(80, 22));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -103,6 +105,7 @@ public class Tela_Login extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
         jPanel1.add(jLabel2, gridBagConstraints);
 
+        jTextField2.setPreferredSize(new java.awt.Dimension(80, 22));
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -174,9 +177,36 @@ public class Tela_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        Tela_Principal principal = new Tela_Principal();
-        principal.setVisible(true);
-        this.dispose();
+    
+        String email = jTextField2.getText().trim();
+        String senha = new String(jPasswordField1.getPassword());
+
+        if (email.isEmpty() || senha.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, "Informe o e-mail e a senha!");
+            
+            return;
+        }
+
+        try {
+            if (BancoDados.validarLogin(email, senha)) {
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+
+                Tela_Principal principal = new Tela_Principal();
+                principal.setVisible(true);
+                this.dispose();
+
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this, "E-mail ou senha inválidos!");
+            }
+
+        } catch (java.sql.SQLException erro) {
+            erro.printStackTrace();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao consultar o banco de dados: " + erro.getMessage());
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
