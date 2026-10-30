@@ -28,31 +28,120 @@ public class Tela_Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        pnlMonitor = new javax.swing.JPanel();
+        lblveiculos = new javax.swing.JLabel();
+        lblvagas = new javax.swing.JLabel();
+        veiculosnum = new javax.swing.JLabel();
+        vagasnum = new javax.swing.JLabel();
+        btnEntrada = new javax.swing.JButton();
+        btnSaida = new javax.swing.JButton();
+        lblEstacionamento = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Nada aqui ainda por hora");
+        pnlMonitor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblveiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carro png.png"))); // NOI18N
+        lblveiculos.setText("Veículos Estacionados");
+
+        lblvagas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vagas.png"))); // NOI18N
+        lblvagas.setText("Vagas Disponíveis");
+
+        veiculosnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        veiculosnum.setText("N.º");
+        veiculosnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        vagasnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        vagasnum.setText("N.º");
+        vagasnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout pnlMonitorLayout = new javax.swing.GroupLayout(pnlMonitor);
+        pnlMonitor.setLayout(pnlMonitorLayout);
+        pnlMonitorLayout.setHorizontalGroup(
+            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMonitorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblveiculos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(lblvagas)
+                .addGap(18, 18, 18))
+            .addGroup(pnlMonitorLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(veiculosnum)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(vagasnum)
+                .addGap(51, 51, 51))
+        );
+        pnlMonitorLayout.setVerticalGroup(
+            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMonitorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(veiculosnum)
+                    .addComponent(vagasnum))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblveiculos)
+                    .addComponent(lblvagas))
+                .addGap(35, 35, 35))
+        );
+
+        btnEntrada.setBackground(new java.awt.Color(36, 105, 224));
+        btnEntrada.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrada.setText("ENTRADA");
+        btnEntrada.addActionListener(this::btnEntradaActionPerformed);
+
+        btnSaida.setBackground(new java.awt.Color(212, 45, 73));
+        btnSaida.setForeground(new java.awt.Color(255, 255, 255));
+        btnSaida.setText("SAIDA");
+        btnSaida.addActionListener(this::btnSaidaActionPerformed);
+
+        lblEstacionamento.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        lblEstacionamento.setText("Estacionamento");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(btnEntrada)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnSaida))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(pnlMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(lblEstacionamento)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addComponent(jLabel1)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(lblEstacionamento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntradaActionPerformed
+
+    private void btnSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,6 +169,13 @@ public class Tela_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnEntrada;
+    private javax.swing.JButton btnSaida;
+    private javax.swing.JLabel lblEstacionamento;
+    private javax.swing.JLabel lblvagas;
+    private javax.swing.JLabel lblveiculos;
+    private javax.swing.JPanel pnlMonitor;
+    private javax.swing.JLabel vagasnum;
+    private javax.swing.JLabel veiculosnum;
     // End of variables declaration//GEN-END:variables
 }
