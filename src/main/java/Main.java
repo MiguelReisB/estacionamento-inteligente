@@ -3,22 +3,13 @@ package com.mycompany.mavenproject1;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 
-public class Mavenproject1 {
+public class Main {
 
     public static void main(String[] args) {
 
-        try {
-            BancoDados.inicializar();
-            
-            Tela_Login login = new Tela_Login();
-            login.setVisible(true);
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(
-                null,
-                "Erro ao conectar com o banco: " + e.getMessage()
-            );
-        }
+        Tela_Login login = new Tela_Login();
+        login.show();
+        
     }
     
     /*(Teste de conexão do banco)
