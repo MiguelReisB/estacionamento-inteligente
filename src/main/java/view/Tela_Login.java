@@ -155,7 +155,7 @@ public class Tela_Login extends javax.swing.JFrame {
         }
 
 
-        String sql = "SELECT * FROM usuarios WHERE nome=? AND senha=?";
+        String sql = "SELECT * FROM funcionarios WHERE login=? AND senha=? AND status='ATIVO'";;
 
 
         try (Connection conexao = util.FabricaConexao.getConexao();
