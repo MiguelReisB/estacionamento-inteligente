@@ -27,96 +27,118 @@ public class Tela_Entrada extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lblplaca = new javax.swing.JLabel();
         lblplaca1 = new javax.swing.JLabel();
-        btnmoto = new javax.swing.JButton();
         btncarro = new javax.swing.JButton();
-        textplaca = new javax.swing.JTextPane();
         btnregistrar = new javax.swing.JButton();
+        btntipocarro = new javax.swing.JButton();
+        btntipomoto = new javax.swing.JButton();
+        txtplaca = new javax.swing.JTextField();
+        btnretirar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(346, 288));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblplaca.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblplaca.setText("Tipo de Veículo:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 144, 0, 0);
+        getContentPane().add(lblplaca, gridBagConstraints);
 
         lblplaca1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblplaca1.setText("Digite a Placa do Veículo");
-
-        btnmoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/moto.png"))); // NOI18N
-        btnmoto.setBorder(null);
-        btnmoto.setContentAreaFilled(false);
-        btnmoto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnmoto.setName(""); // NOI18N
-        btnmoto.addActionListener(this::btnmotoActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(29, 115, 0, 0);
+        getContentPane().add(lblplaca1, gridBagConstraints);
 
         btncarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carro png.png"))); // NOI18N
         btncarro.setBorder(null);
         btncarro.setContentAreaFilled(false);
         btncarro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btncarro.addActionListener(this::btncarroActionPerformed);
-
-        textplaca.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(btncarro, gridBagConstraints);
 
         btnregistrar.setBackground(new java.awt.Color(36, 105, 224));
-        btnregistrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnregistrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnregistrar.setText("Registrar Veículo");
+        btnregistrar.setText("Adicionar Veículo");
         btnregistrar.addActionListener(this::btnregistrarActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipady = 24;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 89, 72, 0);
+        getContentPane().add(btnregistrar, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(btncarro)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnmoto))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(textplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(lblplaca1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(105, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(btnregistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lblplaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lblplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btncarro)
-                    .addComponent(btnmoto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnregistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
+        btntipocarro.setBackground(new java.awt.Color(78, 123, 200));
+        btntipocarro.setForeground(new java.awt.Color(255, 255, 255));
+        btntipocarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carro.png"))); // NOI18N
+        btntipocarro.setText("Carro");
+        btntipocarro.addActionListener(this::btntipocarroActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 89, 0, 0);
+        getContentPane().add(btntipocarro, gridBagConstraints);
+
+        btntipomoto.setBackground(new java.awt.Color(78, 123, 200));
+        btntipomoto.setForeground(new java.awt.Color(255, 255, 255));
+        btntipomoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/moto.png"))); // NOI18N
+        btntipomoto.setText("Moto");
+        btntipomoto.addActionListener(this::btntipomotoActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 27, 0, 90);
+        getContentPane().add(btntipomoto, gridBagConstraints);
+
+        txtplaca.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtplaca.addActionListener(this::txtplacaActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.ipadx = 131;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 115, 0, 0);
+        getContentPane().add(txtplaca, gridBagConstraints);
+
+        btnretirar.setBackground(new java.awt.Color(212, 45, 73));
+        btnretirar.setForeground(new java.awt.Color(255, 255, 255));
+        btnretirar.setText("Retirar Veículo");
+        btnretirar.addActionListener(this::btnretirarActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 8;
+        gridBagConstraints.ipady = 24;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 72, 90);
+        getContentPane().add(btnretirar, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnmotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmotoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnmotoActionPerformed
 
     private void btncarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncarroActionPerformed
         // TODO add your handling code here:
@@ -125,6 +147,22 @@ public class Tela_Entrada extends javax.swing.JFrame {
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnregistrarActionPerformed
+
+    private void btntipocarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntipocarroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btntipocarroActionPerformed
+
+    private void btntipomotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntipomotoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btntipomotoActionPerformed
+
+    private void txtplacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtplacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtplacaActionPerformed
+
+    private void btnretirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnretirarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnretirarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,10 +191,12 @@ public class Tela_Entrada extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncarro;
-    private javax.swing.JButton btnmoto;
     private javax.swing.JButton btnregistrar;
+    private javax.swing.JButton btnretirar;
+    private javax.swing.JButton btntipocarro;
+    private javax.swing.JButton btntipomoto;
     private javax.swing.JLabel lblplaca;
     private javax.swing.JLabel lblplaca1;
-    private javax.swing.JTextPane textplaca;
+    private javax.swing.JTextField txtplaca;
     // End of variables declaration//GEN-END:variables
 }
