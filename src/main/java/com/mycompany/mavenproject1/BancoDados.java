@@ -12,9 +12,9 @@ import java.sql.ResultSet;
 
 public class BancoDados {
 
-    private static final String URL = "jdbc:h2:file:./dados/estacionamento";
-    private static final String USUARIO = "sa";
-    private static final String SENHA = "";
+    private static final String URL = "jdbc:mysql://0.tcp.sa.ngrok.io:14279/Estacionamento";
+    private static final String USUARIO = "admin";
+    private static final String SENHA = "Un@2026Un@";
 
 public static Connection conectar() throws SQLException {
 
