@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -154,19 +155,15 @@ public class Tela_Login extends javax.swing.JFrame {
             return;
         }
 
-
-        String sql = "SELECT * FROM usuarios WHERE nome=? AND senha=?";
-
+        String sql = "SELECT senha FROM usuarios WHERE nome = ?";
 
         try (Connection conexao = util.FabricaConexao.getConexao();
              PreparedStatement dec_sql = conexao.prepareStatement(sql)) {
 
-
             dec_sql.setString(1, txtUsuario.getText());
-            dec_sql.setString(2, snhSenha.getText());
 
             try (ResultSet rslogin = dec_sql.executeQuery()) {
-                if(rslogin.next()){
+                if(rslogin.next() && BCrypt.checkpw(snhSenha.getText(), rslogin.getString("senha"))){
                     Tela_Principal principal = new Tela_Principal();
                     principal.setVisible(true);
                     this.dispose();

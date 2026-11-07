@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -163,8 +164,12 @@ public class Tela_Cadastro extends javax.swing.JFrame {
 
     private void btnAvancarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAvancarMouseClicked
         
-        String sql1 = "INSERT INTO usuarios (nome, senha) VALUES('"+txtNomeUsuario.getText()+"', '"+snhSenha.getText()+"')";
-        String sql2 = "SELECT * FROM usuarios where nome='"+txtNomeUsuario.getText()+"'";
+        String nome = txtNomeUsuario.getText();
+        String senha = snhSenha.getText();
+        String senhaHash = BCrypt.hashpw(senha, BCrypt.gensalt());
+        
+        String sql1 = "INSERT INTO usuarios (nome, senha) VALUES('"+nome+"', '"+senhaHash+"')";
+        String sql2 = "SELECT * FROM usuarios where nome='"+nome+"'";
         
         if(txtNomeUsuario.getText().length() == 0){
             JOptionPane.showMessageDialog(null, "Nome do usuário vazio");

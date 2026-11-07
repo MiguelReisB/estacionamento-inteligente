@@ -16,8 +16,8 @@ import java.sql.SQLException;
 public class FabricaConexao {
 
 // credenciais do banco
-    private static final String URL = "jdbc:mysql://127.0.0.1:5014/teste";
-    private static final String USUARIO = "remoto";
+    private static final String URL = "jdbc:mysql://0.tcp.sa.ngrok.io:14279/Estacionamento";
+    private static final String USUARIO = "admin";
     private static final String SENHA = "Un@2026Un@";
     
     public static Connection getConexao() throws SQLException {
