@@ -133,8 +133,8 @@ public class Tela_Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        Tela_Entrada telaDeEntrada = new Tela_Entrada();
-        telaDeEntrada.setVisible(true);
+        Tela_Entrada TelaDeEntrada = new Tela_Entrada();
+        TelaDeEntrada.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEntradaActionPerformed
 
