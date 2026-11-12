@@ -45,8 +45,8 @@ estacionamento-inteligente/
         ├── BancoDados.java        conexão H2 (legado, conflita com FabricaConexao)
         ├── Tela_Login             ✅ funcional
         ├── Tela_Cadastro          🟡 funcional, mas inseguro
-        ├── Tela_Principal         🟡 só visual
-        └── Tela_Entrada           🟡 só visual (não é aberta por nenhuma tela)
+        ├── Tela_Principal         🟡 (alinhar com banco de dados)
+        └── Tela_Entrada           🟡 (alinhar com banco de dados)
 ```
 
 ---
@@ -102,17 +102,17 @@ estacionamento-inteligente/
 ### Integrante 3 — Interface gráfica
 - [x] Tela de Login (visual + navegação para Cadastro) ✅
 - [x] Tela de Cadastro (visual + voltar/sair) ✅
-- [x] Tela Principal (layout com contadores “Veículos estacionados” / “Vagas disponíveis” e botões ENTRADA/SAÍDA)
-- [x] Tela de Entrada (layout: tipo de veículo carro/moto, placa, “Registrar Veículo”)
-- [ ] **Corrigir imagens (B1)** — mover `img/` para `src/main/resources/img/` e trocar `"carro png.png"` por `"carro.png"`
-- [ ] Botão ENTRADA abrir `Tela_Entrada`
+- [x] Tela Principal (layout com contadores “Veículos estacionados” / “Vagas disponíveis” e botões ENTRADA/SAÍDA)✅
+- [x] Tela de Entrada (layout: tipo de veículo carro/moto, placa, “Registrar Veículo”)✅
+- [x] **Corrigir imagens (B1)** — mover `img/` para `src/main/resources/img/` e trocar `"carro png.png"` por `"carro.png"`✅
+- [x] Botão ENTRADA abrir `Tela_Entrada`✅
 - [ ] Botão SAÍDA abrir tela de saída/pagamento
 - [ ] Criar **Tela de Saída / Pagamento** (buscar ticket por placa, mostrar tempo e valor, confirmar pagamento)
 - [ ] Criar **Tela de Vagas** (tabela `JTable` com vagas e status; cadastrar vaga)
 - [ ] Contadores da Tela Principal com dados reais do banco (hoje mostram “N.º”)
-- [ ] Botões carro/moto marcarem a seleção visualmente
-- [ ] Botão voltar nas telas internas
-- [ ] Padronizar cores (já existe: azul `36,105,224` / vermelho `212,45,73`), fontes e mensagens
+- [x] Botões carro/moto marcarem a seleção visualmente✅
+- [x] Botão voltar nas telas internas✅
+- [x] Padronizar cores (já existe: azul `36,105,224` / vermelho `212,45,73`), fontes e mensagens✅
 - [ ] Ajustes B8 (`actionPerformed`, `getPassword()`, mensagem de sucesso no cadastro)
 
 ### Integrante 4 — Operações do estacionamento
