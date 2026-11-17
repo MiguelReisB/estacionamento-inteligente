@@ -2,7 +2,7 @@
 
 > Sistema Inteligente de Gestão de Vagas Rotativas
 > Disciplinas: Banco de Dados | Garantia da Qualidade de Software
-> **Última atualização:** 04/11/2026
+> **Última atualização:** 17/11/2026
 > Legenda: ✅ feito · 🟡 parcial / com problemas · ❌ não iniciado · ⚠️ bug ou risco
 
 ---
@@ -138,9 +138,16 @@ estacionamento-inteligente/
 - [ ] Prints/logs como evidência (inclusive `SHOW ENGINE INNODB STATUS` ou `performance_schema.data_locks`)
 - [ ] Decidir: vaga específica (linha por vaga) **ou** contador de vagas — hoje o código usa vaga específica
 
+**Testes automatizados e GitHub (CI)**
+- [ ] Adicionar JUnit 5 ao `pom.xml` e criar a pasta `src/test/java`
+- [ ] Testes unitários (ex.: hash/login do `UsuarioDAO`, validação de placa, cálculo de tarifa)
+- [ ] Transformar `SimulacaoConcorrencia` e o cenário de rollback em testes automatizados
+- [ ] Workflow do GitHub Actions (`.github/workflows/`) que compila e roda os testes a cada push/PR
+- [ ] MySQL no CI (serviço `mysql` no workflow) para os testes que usam banco
+
 ### Integrante 6 — Qualidade, testes e documentação
 - [ ] Lista de requisitos funcionais (RF) e não funcionais (RNF)
-- [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback)
+- [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
 - [ ] Registro dos resultados dos testes
 - [ ] Relatório técnico
 - [ ] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
@@ -164,7 +171,7 @@ estacionamento-inteligente/
 
 **Fase 3 — Completar o ciclo**
 7. Integrante 4 + 3: tela de saída, pagamento e liberação da vaga.
-8. Integrante 5: simulação das duas cancelas + teste de rollback + evidências.
+8. Integrante 5: simulação das duas cancelas + teste de rollback + evidências + testes automatizados rodando no GitHub Actions.
 
 **Fase 4 — Entrega**
 9. Integrante 6: casos de teste executados, relatório, guia de instalação, roteiro da apresentação.
