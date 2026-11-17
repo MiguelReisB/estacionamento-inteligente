@@ -1,0 +1,8 @@
+# Configuração de acesso ao MySQL
+# 1. Copie este arquivo para "db.properties" (na mesma pasta, mavenproject1/)
+# 2. Preencha com os dados do SEU MySQL
+# O db.properties está no .gitignore: NUNCA envie suas credenciais para o Git.
+
+db.url=jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo
+db.usuario=root
+db.senha=

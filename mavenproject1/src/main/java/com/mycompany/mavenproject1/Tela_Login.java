@@ -189,7 +189,7 @@ public class Tela_Login extends javax.swing.JFrame {
         }
 
         try {
-            if (BancoDados.validarLogin(email, senha)) {
+            if (new dao.UsuarioDAO().autenticar(email, senha)) {
 
                 javax.swing.JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
 
@@ -203,9 +203,7 @@ public class Tela_Login extends javax.swing.JFrame {
             }
 
         } catch (java.sql.SQLException erro) {
-            erro.printStackTrace();
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao consultar o banco de dados: " + erro.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(erro));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 

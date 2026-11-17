@@ -16,3 +16,8 @@ target/
 # Sistema operacional
 .DS_Store
 Thumbs.db
+# Credenciais locais do banco (usar db.properties.example como modelo)
+db.properties
+
+# Banco H2 antigo
+**/dados/
