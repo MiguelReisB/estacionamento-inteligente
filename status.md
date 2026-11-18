@@ -150,7 +150,8 @@ estacionamento-inteligente/
 - [ ] MySQL no CI (serviço `mysql` no workflow) para os testes que usam banco
 
 ### Integrante 6 — Qualidade, testes e documentação
-- [ ] Lista de requisitos funcionais (RF) e não funcionais (RNF)
+- [X] Lista de requisitos funcionais (RF) e não funcionais (RNF)
+> Se encontram na pasta docs - Miguel Reis (18/11/2026)
 - [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
 - [ ] Registro dos resultados dos testes
 - [ ] Relatório técnico
