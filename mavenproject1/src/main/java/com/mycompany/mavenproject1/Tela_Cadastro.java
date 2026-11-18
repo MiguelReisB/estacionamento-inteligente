@@ -11,10 +11,10 @@ import javax.swing.JFrame;
  * @author henri
  */
 
+import dao.UsuarioDAO;
 import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import util.ErroBanco;
 
 public class Tela_Cadastro extends javax.swing.JFrame {
     
@@ -190,16 +190,14 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         return;
     }
 
-    String sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    try {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        UsuarioDAO.ResultadoCadastro resultado = usuarioDAO.cadastrar(nome, email, senha);
 
-    try (Connection conexao = BancoDados.conectar();
-        PreparedStatement comando = conexao.prepareStatement(sql)) {
-
-        comando.setString(1, nome);
-        comando.setString(2, email);
-        comando.setString(3, senha);
-
-        comando.executeUpdate();
+        if (resultado == UsuarioDAO.ResultadoCadastro.EMAIL_JA_CADASTRADO) {
+            JOptionPane.showMessageDialog(this, "Este e-mail já está cadastrado!");
+            return;
+        }
 
         JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
 
@@ -207,20 +205,10 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
 
-    } 
+    }
     catch (SQLException e) {
-
-        if ("23505".equals(e.getSQLState())) {
-            JOptionPane.showMessageDialog(
-                    this, "Este e-mail já está cadastrado!");
-        } 
-        else {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Erro ao cadastrar usuário: " + e.getMessage());
-            e.printStackTrace();
-        }
-}
+        JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+    }
 
     }//GEN-LAST:event_jButton1MouseClicked
 

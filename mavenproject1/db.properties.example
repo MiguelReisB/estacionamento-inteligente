@@ -1,0 +1,6 @@
+# copie esse arquivo com o nome db.properties (na pasta mavenproject1)
+# e coloque os dados do seu MySQL. o db.properties nao sobe pro git
+
+db.url=jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo
+db.usuario=root
+db.senha=
