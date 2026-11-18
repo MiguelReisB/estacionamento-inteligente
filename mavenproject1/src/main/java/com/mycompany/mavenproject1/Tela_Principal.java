@@ -17,6 +17,20 @@ public class Tela_Principal extends javax.swing.JFrame {
      */
     public Tela_Principal() {
         initComponents();
+        atualizarContadores();
+    }
+
+    /** Preenche os contadores com os dados reais do banco (Integrante 4). */
+    private void atualizarContadores() {
+        try {
+            dao.VagaDAO vagaDAO = new dao.VagaDAO();
+            veiculosnum.setText(String.valueOf(vagaDAO.contarOcupadas()));
+            vagasnum.setText(String.valueOf(vagaDAO.contarLivres()));
+        } catch (java.sql.SQLException e) {
+            veiculosnum.setText("-");
+            vagasnum.setText("-");
+            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(e));
+        }
     }
 
     /**

@@ -92,12 +92,13 @@ estacionamento-inteligente/
 - [x] Conexão transacional com `autoCommit=false`
 - [x] Login funcional (com `PreparedStatement`) ✅
 - [x] Cadastro funcional (verifica usuário duplicado e senhas iguais)
-- [ ] Corrigir SQL Injection no cadastro (B2)
-- [ ] Hash de senha (BCrypt ou SHA-256 + salt) no cadastro e no login (B3)
-- [ ] Criar `UsuarioDAO` (tirar SQL de dentro das telas)
-- [ ] Remover `BancoDados.java` (H2) e a dependência H2, ou justificar (B4)
-- [ ] Mover credenciais para `db.properties` fora do Git, com um `db.properties.example` (B5)
-- [ ] Mensagens de erro amigáveis para falha de conexão (hoje mostra a mensagem técnica)
+- [x] Corrigir SQL Injection no cadastro (B2) — Henrique, 17/11
+- [x] Hash de senha (BCrypt, `jbcrypt 0.4`) no cadastro e no login (B3) — Henrique, 17/11
+- [x] Criar `UsuarioDAO` (tirar SQL de dentro das telas) — Henrique, 17/11
+- [x] Remover `BancoDados.java` (H2) e a dependência H2 (B4) — Henrique, 17/11
+- [x] Mover credenciais para `db.properties` fora do Git, com um `db.properties.example` (B5) — Henrique, 17/11
+- [x] Mensagens de erro amigáveis para falha de conexão (`util/ErroBanco`) — Henrique, 17/11
+- [x] Script `database/usuarios.sql` (login por e-mail, `email` UNIQUE, `senha CHAR(60)`) — Henrique, 17/11
 
 ### Integrante 3 — Interface gráfica
 - [x] Tela de Login (visual + navegação para Cadastro) ✅
@@ -109,23 +110,26 @@ estacionamento-inteligente/
 - [ ] Botão SAÍDA abrir tela de saída/pagamento
 - [ ] Criar **Tela de Saída / Pagamento** (buscar ticket por placa, mostrar tempo e valor, confirmar pagamento)
 - [ ] Criar **Tela de Vagas** (tabela `JTable` com vagas e status; cadastrar vaga)
-- [ ] Contadores da Tela Principal com dados reais do banco (hoje mostram “N.º”)
+- [x] Contadores da Tela Principal com dados reais do banco — feito junto com o Integrante 4 (Henrique, 17/11)
 - [x] Botões carro/moto marcarem a seleção visualmente✅
 - [x] Botão voltar nas telas internas✅
 - [x] Padronizar cores (já existe: azul `36,105,224` / vermelho `212,45,73`), fontes e mensagens✅
 - [ ] Ajustes B8 (`actionPerformed`, `getPassword()`, mensagem de sucesso no cadastro)
 
 ### Integrante 4 — Operações do estacionamento
-- [x] Modelos `Vaga` e `Ticket` criados (precisam ser alinhados ao banco — B7)
-- [ ] `VagaDAO`: cadastrar, listar, contar livres/ocupadas
-- [ ] `TicketDAO`: buscar ticket ativo por placa, listar ativos
-- [ ] Ligar “Registrar Veículo” ao `EntradaVeiculoService` (validar placa antes)
-- [ ] Validação de placa (formato antigo `ABC1234` e Mercosul `ABC1D23`)
-- [ ] Impedir entrada de placa que já tem ticket ATIVO
-- [ ] Cálculo do valor (regra de tarifa: definir fração/hora, tolerância)
-- [ ] Pagamento → muda ticket para PAGO
-- [ ] Saída → ticket ENCERRADO + vaga LIVRE (também em transação)
-- [ ] Máquina de estados respeitada (não pagar ticket encerrado, não liberar sem pagamento etc.)
+- [x] Modelos `Vaga`, `Ticket`, `TipoVeiculo`, `StatusTicket` alinhados ao banco (B7) — Henrique, 17/11
+- [x] Script `database/operacoes.sql`: tabelas `vagas` (por tipo CARRO/MOTO) e `tickets`, InnoDB, FKs, índices, 10 vagas de carro + 5 de moto — Henrique, 17/11
+- [x] `VagaDAO`: cadastrar, listar, contar livres/ocupadas, buscar vaga livre com `FOR UPDATE` — Henrique, 17/11
+- [x] `TicketDAO`: buscar ticket aberto por placa, listar ativos — Henrique, 17/11
+- [x] Botão “Adicionar Veículo” ligado ao `EntradaVeiculoService` (valida tipo e placa antes) — Henrique, 17/11
+- [x] Validação de placa (formato antigo `ABC1234` e Mercosul `ABC1D23`, aceita hífen) — Henrique, 17/11
+- [x] Impedir entrada de placa que já está no estacionamento (checagem + UNIQUE no banco) — Henrique, 17/11
+- [x] Cálculo do valor: **R$ 5,00 por hora ou fração, sem tolerância, carro e moto iguais** (`CalculadoraTarifa`) — Henrique, 17/11
+- [x] Pagamento → ticket PAGO (botão “Retirar Veículo”: mostra tempo e valor e pede confirmação) — Henrique, 17/11
+- [x] Saída → ticket ENCERRADO + vaga LIVRE, em transação (`SaidaVeiculoService`) — Henrique, 17/11
+- [x] Máquina de estados ATIVO → PAGO → ENCERRADO (não paga duas vezes, não sai sem pagar) — Henrique, 17/11
+
+> ℹ️ O `EntradaVeiculoService` (Integrante 5) tinha sido apagado da main no revert de 11/11 e foi recriado com `SELECT ... FOR UPDATE`, `COMMIT`, `ROLLBACK` explícito e logs com horário e cancela. O Integrante 5 pode revisar e continuar a partir dele.
 
 ### Integrante 5 — Transações e concorrência
 - [x] Transação de entrada com `COMMIT` / `ROLLBACK` (`EntradaVeiculoService`) ✅

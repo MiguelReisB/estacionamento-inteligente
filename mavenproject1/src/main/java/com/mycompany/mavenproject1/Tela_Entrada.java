@@ -35,7 +35,94 @@ public class Tela_Entrada extends javax.swing.JFrame {
             }
         });
     }
-    
+
+    // ===================== Operações (Integrante 4) =====================
+
+    private static final String CANCELA = "Cancela Principal";
+    private static final java.time.format.DateTimeFormatter FORMATO_DATA =
+            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    private model.TipoVeiculo tipoEscolhido() {
+        if (btntipocarro.isSelected()) {
+            return model.TipoVeiculo.CARRO;
+        }
+        if (btntipomoto.isSelected()) {
+            return model.TipoVeiculo.MOTO;
+        }
+        return null;
+    }
+
+    private void registrarEntrada() {
+        try {
+            service.EntradaVeiculoService.ResultadoEntrada resultado =
+                    new service.EntradaVeiculoService().processarEntrada(txtplaca.getText(), tipoEscolhido(), CANCELA);
+
+            if (resultado.liberada()) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Entrada liberada!\nVaga: " + resultado.vaga() + "\nTicket nº " + resultado.ticketId(),
+                        "Entrada", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                txtplaca.setText("");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Lotação esgotada: não há vagas livres para " + tipoEscolhido().getDescricao().toLowerCase() + ".",
+                        "Entrada recusada", javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (service.OperacaoInvalidaException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(e), "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /** Consulta o ticket, mostra tempo e valor, confirma o pagamento e libera a saída. */
+    private void retirarVeiculo() {
+        service.SaidaVeiculoService saida = new service.SaidaVeiculoService();
+        String placa = txtplaca.getText();
+
+        try {
+            model.Ticket ticket = saida.consultar(placa);
+
+            if (ticket.getStatus() == model.StatusTicket.ATIVO) {
+                long horas = service.CalculadoraTarifa.horasCobradas(ticket.getDataEntrada(), java.time.LocalDateTime.now());
+                String resumo = "Placa: " + ticket.getPlaca()
+                        + "\nVaga: " + ticket.getVagaIdentificacao()
+                        + "\nEntrada: " + ticket.getDataEntrada().format(FORMATO_DATA)
+                        + "\nHoras cobradas: " + horas
+                        + "\nValor a pagar: " + formatarValor(ticket.getValor())
+                        + "\n\nConfirmar pagamento?";
+
+                int opcao = javax.swing.JOptionPane.showConfirmDialog(this, resumo, "Pagamento",
+                        javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
+                if (opcao != javax.swing.JOptionPane.YES_OPTION) {
+                    return;
+                }
+                ticket = saida.pagar(placa);
+            }
+
+            // Ticket PAGO: registra a saída e libera a vaga
+            ticket = saida.registrarSaida(placa);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Saída liberada!\nPlaca: " + ticket.getPlaca()
+                    + "\nValor pago: " + formatarValor(ticket.getValor())
+                    + "\nVaga " + ticket.getVagaIdentificacao() + " liberada.",
+                    "Recibo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            txtplaca.setText("");
+
+        } catch (service.OperacaoInvalidaException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(e), "Erro",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private static String formatarValor(java.math.BigDecimal valor) {
+        return java.text.NumberFormat.getCurrencyInstance(java.util.Locale.of("pt", "BR")).format(valor);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,7 +233,7 @@ public class Tela_Entrada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
-        // TODO add your handling code here:
+        registrarEntrada();
     }//GEN-LAST:event_btnregistrarActionPerformed
 
     private void txtplacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtplacaActionPerformed
@@ -154,7 +241,7 @@ public class Tela_Entrada extends javax.swing.JFrame {
     }//GEN-LAST:event_txtplacaActionPerformed
 
     private void btnretirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnretirarActionPerformed
-        
+        retirarVeiculo();
     }//GEN-LAST:event_btnretirarActionPerformed
 
     private void btntipomotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntipomotoActionPerformed
