@@ -3,7 +3,10 @@ package model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/** Ticket de permanência (tabela tickets). Campos com os mesmos nomes das colunas. */
+/**
+ *
+ * @author henri
+ */
 public class Ticket {
 
     private int id;

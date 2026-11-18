@@ -1,6 +1,9 @@
 package model;
 
-/** Vaga do estacionamento (tabela vagas). */
+/**
+ *
+ * @author henri
+ */
 public class Vaga {
 
     public static final String LIVRE = "LIVRE";

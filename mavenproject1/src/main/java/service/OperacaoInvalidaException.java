@@ -1,10 +1,11 @@
 package service;
 
 /**
- * Violação de regra de negócio (placa inválida, ticket inexistente,
- * transição de estado proibida etc.). A mensagem já é amigável
- * e pode ser mostrada direto ao usuário.
+ *
+ * @author henri
  */
+// erro de regra do estacionamento (placa invalida, ticket nao pago, etc)
+// a mensagem ja pode ir direto pra tela
 public class OperacaoInvalidaException extends Exception {
 
     public OperacaoInvalidaException(String mensagem) {

@@ -16,30 +16,25 @@ import model.TipoVeiculo;
 import util.FabricaConexao;
 
 /**
- * Acesso à tabela tickets.
  *
- * "Ticket aberto" = status ATIVO ou PAGO (o veículo ainda está no pátio).
- * Os métodos que recebem uma Connection são usados dentro de transações.
+ * @author henri
  */
 public class TicketDAO {
 
-    private static final String SELECT_BASE =
+    // ticket "aberto" = ATIVO ou PAGO, ou seja o carro ainda ta no estacionamento
+    private static final String SELECT_TICKET =
             "SELECT t.id, t.placa, t.tipo_veiculo, t.vaga_id, v.identificacao AS vaga_identificacao, "
             + "t.data_entrada, t.data_pagamento, t.data_saida, t.cancela_entrada, t.valor, t.status "
             + "FROM tickets t JOIN vagas v ON v.id = t.vaga_id ";
 
-    // ---------- consultas simples ----------
-
-    /** Ticket ATIVO ou PAGO da placa, ou null se o veículo não está no estacionamento. */
     public Ticket buscarAbertoPorPlaca(String placa) throws SQLException {
         try (Connection conexao = FabricaConexao.getConexao()) {
-            return buscarAberto(conexao, placa, false);
+            return buscarAberto(conexao, placa);
         }
     }
 
-    /** Tickets ATIVOS (veículos estacionados que ainda não pagaram), do mais antigo ao mais novo. */
     public List<Ticket> listarAtivos() throws SQLException {
-        String sql = SELECT_BASE + "WHERE t.status = 'ATIVO' ORDER BY t.data_entrada";
+        String sql = SELECT_TICKET + "WHERE t.status = 'ATIVO' ORDER BY t.data_entrada";
         List<Ticket> tickets = new ArrayList<>();
 
         try (Connection conexao = FabricaConexao.getConexao();
@@ -47,22 +42,21 @@ public class TicketDAO {
              ResultSet rs = comando.executeQuery()) {
 
             while (rs.next()) {
-                tickets.add(montar(rs));
+                tickets.add(montarTicket(rs));
             }
         }
         return tickets;
     }
 
-    // ---------- operações transacionais ----------
+    // daqui pra baixo sao usados dentro das transacoes
 
-    /** Busca o ticket aberto da placa dentro da transação, sem travar. */
     public Ticket buscarAberto(Connection conexao, String placa) throws SQLException {
-        return buscarAberto(conexao, placa, false);
+        return buscar(conexao, placa, false);
     }
 
-    /** Busca o ticket aberto da placa TRAVANDO a linha (SELECT ... FOR UPDATE). */
+    // mesma busca mas trava a linha do ticket (FOR UPDATE)
     public Ticket buscarAbertoComLock(Connection conexao, String placa) throws SQLException {
-        return buscarAberto(conexao, placa, true);
+        return buscar(conexao, placa, true);
     }
 
     public int inserir(Connection conexao, String placa, TipoVeiculo tipo, int vagaId,
@@ -78,14 +72,14 @@ public class TicketDAO {
             comando.setString(5, cancela);
             comando.executeUpdate();
 
-            try (ResultSet chaves = comando.getGeneratedKeys()) {
-                chaves.next();
-                return chaves.getInt(1);
+            try (ResultSet rs = comando.getGeneratedKeys()) {
+                rs.next();
+                return rs.getInt(1); // id do ticket criado
             }
         }
     }
 
-    /** ATIVO -> PAGO. O "AND status = 'ATIVO'" impede pular etapas mesmo se a regra falhar no Java. */
+    // o "AND status = 'ATIVO'" e pra garantir que so paga ticket ativo
     public boolean registrarPagamento(Connection conexao, int ticketId, BigDecimal valor,
                                       LocalDateTime dataPagamento) throws SQLException {
         String sql = "UPDATE tickets SET status = 'PAGO', valor = ?, data_pagamento = ? "
@@ -99,7 +93,6 @@ public class TicketDAO {
         }
     }
 
-    /** PAGO -> ENCERRADO. */
     public boolean encerrar(Connection conexao, int ticketId, LocalDateTime dataSaida) throws SQLException {
         String sql = "UPDATE tickets SET status = 'ENCERRADO', data_saida = ? "
                 + "WHERE id = ? AND status = 'PAGO'";
@@ -111,37 +104,43 @@ public class TicketDAO {
         }
     }
 
-    // ---------- auxiliares ----------
-
-    private Ticket buscarAberto(Connection conexao, String placa, boolean comLock) throws SQLException {
-        String sql = SELECT_BASE + "WHERE t.placa = ? AND t.status IN ('ATIVO','PAGO')"
-                + (comLock ? " FOR UPDATE" : "");
+    private Ticket buscar(Connection conexao, String placa, boolean travar) throws SQLException {
+        String sql = SELECT_TICKET + "WHERE t.placa = ? AND t.status IN ('ATIVO','PAGO')";
+        if (travar) {
+            sql += " FOR UPDATE";
+        }
 
         try (PreparedStatement comando = conexao.prepareStatement(sql)) {
             comando.setString(1, placa);
             try (ResultSet rs = comando.executeQuery()) {
-                return rs.next() ? montar(rs) : null;
+                if (rs.next()) {
+                    return montarTicket(rs);
+                }
+                return null;
             }
         }
     }
 
-    private Ticket montar(ResultSet rs) throws SQLException {
+    private Ticket montarTicket(ResultSet rs) throws SQLException {
         Ticket t = new Ticket();
         t.setId(rs.getInt("id"));
         t.setPlaca(rs.getString("placa"));
         t.setTipoVeiculo(TipoVeiculo.valueOf(rs.getString("tipo_veiculo")));
         t.setVagaId(rs.getInt("vaga_id"));
         t.setVagaIdentificacao(rs.getString("vaga_identificacao"));
-        t.setDataEntrada(paraLocal(rs.getTimestamp("data_entrada")));
-        t.setDataPagamento(paraLocal(rs.getTimestamp("data_pagamento")));
-        t.setDataSaida(paraLocal(rs.getTimestamp("data_saida")));
+        t.setDataEntrada(converterData(rs.getTimestamp("data_entrada")));
+        t.setDataPagamento(converterData(rs.getTimestamp("data_pagamento")));
+        t.setDataSaida(converterData(rs.getTimestamp("data_saida")));
         t.setCancelaEntrada(rs.getString("cancela_entrada"));
         t.setValor(rs.getBigDecimal("valor"));
         t.setStatus(StatusTicket.valueOf(rs.getString("status")));
         return t;
     }
 
-    private static LocalDateTime paraLocal(Timestamp ts) {
-        return ts == null ? null : ts.toLocalDateTime();
+    private LocalDateTime converterData(Timestamp data) {
+        if (data == null) {
+            return null;
+        }
+        return data.toLocalDateTime();
     }
 }

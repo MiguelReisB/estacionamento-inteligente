@@ -191,7 +191,8 @@ public class Tela_Cadastro extends javax.swing.JFrame {
     }
 
     try {
-        UsuarioDAO.ResultadoCadastro resultado = new UsuarioDAO().cadastrar(nome, email, senha);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        UsuarioDAO.ResultadoCadastro resultado = usuarioDAO.cadastrar(nome, email, senha);
 
         if (resultado == UsuarioDAO.ResultadoCadastro.EMAIL_JA_CADASTRADO) {
             JOptionPane.showMessageDialog(this, "Este e-mail já está cadastrado!");

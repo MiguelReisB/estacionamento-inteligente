@@ -13,27 +13,21 @@ import util.FabricaConexao;
 import util.ValidadorPlaca;
 
 /**
- * Pagamento e saída de veículos, respeitando a máquina de estados do ticket:
- *   ATIVO --pagar()--> PAGO --registrarSaida()--> ENCERRADO (+ vaga LIVRE)
  *
- * Cada operação roda em transação própria, com o ticket travado (FOR UPDATE)
- * para que duas cancelas não paguem/liberem o mesmo ticket ao mesmo tempo.
+ * @author henri
  */
 public class SaidaVeiculoService {
 
     private final TicketDAO ticketDAO = new TicketDAO();
     private final VagaDAO vagaDAO = new VagaDAO();
 
-    /**
-     * Consulta o ticket aberto da placa. Se ainda não foi pago, o campo
-     * valor vem preenchido com o valor que seria cobrado agora (sem gravar).
-     */
+    // so consulta, nao grava nada. se ainda nao pagou ja calcula o valor de agora
     public Ticket consultar(String placa) throws OperacaoInvalidaException, SQLException {
-        String p = validar(placa);
-        Ticket ticket = ticketDAO.buscarAbertoPorPlaca(p);
+        placa = validarPlaca(placa);
+        Ticket ticket = ticketDAO.buscarAbertoPorPlaca(placa);
 
         if (ticket == null) {
-            throw naoEncontrado(p);
+            throw new OperacaoInvalidaException("Nenhum veículo com a placa " + placa + " está no estacionamento.");
         }
         if (ticket.getStatus() == StatusTicket.ATIVO) {
             ticket.setValor(CalculadoraTarifa.calcular(ticket.getDataEntrada(), LocalDateTime.now()));
@@ -41,21 +35,21 @@ public class SaidaVeiculoService {
         return ticket;
     }
 
-    /** ATIVO -> PAGO. Calcula e grava o valor. Retorna o ticket atualizado. */
+    // ATIVO -> PAGO
     public Ticket pagar(String placa) throws OperacaoInvalidaException, SQLException {
-        String p = validar(placa);
+        placa = validarPlaca(placa);
 
         try (Connection conexao = FabricaConexao.getConexaoTransacional()) {
             try {
-                Ticket ticket = ticketDAO.buscarAbertoComLock(conexao, p);
+                Ticket ticket = ticketDAO.buscarAbertoComLock(conexao, placa);
 
                 if (ticket == null) {
                     conexao.rollback();
-                    throw naoEncontrado(p);
+                    throw new OperacaoInvalidaException("Nenhum veículo com a placa " + placa + " está no estacionamento.");
                 }
                 if (!ticket.getStatus().podeIrPara(StatusTicket.PAGO)) {
                     conexao.rollback();
-                    throw new OperacaoInvalidaException("O ticket do veículo " + p + " já está pago.");
+                    throw new OperacaoInvalidaException("O ticket do veículo " + placa + " já está pago.");
                 }
 
                 LocalDateTime agora = LocalDateTime.now();
@@ -63,7 +57,7 @@ public class SaidaVeiculoService {
 
                 if (!ticketDAO.registrarPagamento(conexao, ticket.getId(), valor, agora)) {
                     conexao.rollback();
-                    throw new OperacaoInvalidaException("Não foi possível registrar o pagamento. Tente novamente.");
+                    throw new OperacaoInvalidaException("Não foi possível registrar o pagamento, tente de novo.");
                 }
 
                 conexao.commit();
@@ -79,29 +73,28 @@ public class SaidaVeiculoService {
         }
     }
 
-    /** PAGO -> ENCERRADO e libera a vaga, na mesma transação. */
+    // PAGO -> ENCERRADO e libera a vaga (na mesma transacao)
     public Ticket registrarSaida(String placa) throws OperacaoInvalidaException, SQLException {
-        String p = validar(placa);
+        placa = validarPlaca(placa);
 
         try (Connection conexao = FabricaConexao.getConexaoTransacional()) {
             try {
-                Ticket ticket = ticketDAO.buscarAbertoComLock(conexao, p);
+                Ticket ticket = ticketDAO.buscarAbertoComLock(conexao, placa);
 
                 if (ticket == null) {
                     conexao.rollback();
-                    throw naoEncontrado(p);
+                    throw new OperacaoInvalidaException("Nenhum veículo com a placa " + placa + " está no estacionamento.");
                 }
                 if (!ticket.getStatus().podeIrPara(StatusTicket.ENCERRADO)) {
                     conexao.rollback();
-                    throw new OperacaoInvalidaException(
-                            "Saída bloqueada: o ticket do veículo " + p + " ainda não foi pago.");
+                    throw new OperacaoInvalidaException("O veículo " + placa + " ainda não pagou, saída bloqueada.");
                 }
 
                 LocalDateTime agora = LocalDateTime.now();
 
                 if (!ticketDAO.encerrar(conexao, ticket.getId(), agora)) {
                     conexao.rollback();
-                    throw new OperacaoInvalidaException("Não foi possível registrar a saída. Tente novamente.");
+                    throw new OperacaoInvalidaException("Não foi possível registrar a saída, tente de novo.");
                 }
                 vagaDAO.atualizarStatus(conexao, ticket.getVagaId(), Vaga.LIVRE);
 
@@ -117,16 +110,11 @@ public class SaidaVeiculoService {
         }
     }
 
-    private static String validar(String placa) throws OperacaoInvalidaException {
-        String p = ValidadorPlaca.normalizar(placa);
-        if (!ValidadorPlaca.isValida(p)) {
-            throw new OperacaoInvalidaException(
-                    "Placa inválida. Use o formato antigo (ABC1234) ou Mercosul (ABC1D23).");
+    private String validarPlaca(String placa) throws OperacaoInvalidaException {
+        placa = ValidadorPlaca.normalizar(placa);
+        if (!ValidadorPlaca.isValida(placa)) {
+            throw new OperacaoInvalidaException("Placa inválida. Use o formato ABC1234 ou ABC1D23.");
         }
-        return p;
-    }
-
-    private static OperacaoInvalidaException naoEncontrado(String placa) {
-        return new OperacaoInvalidaException("Nenhum veículo com a placa " + placa + " está no estacionamento.");
+        return placa;
     }
 }

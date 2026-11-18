@@ -1,6 +1,9 @@
 package model;
 
-/** Tipo do veículo e, ao mesmo tempo, tipo da vaga que ele pode ocupar. */
+/**
+ *
+ * @author henri
+ */
 public enum TipoVeiculo {
     CARRO("Carro"),
     MOTO("Moto");

@@ -10,8 +10,7 @@ public class Mavenproject1 {
     public static void main(String[] args) {
 
         try {
-            // Verifica antes de abrir as telas se o MySQL está acessível
-            FabricaConexao.testarConexao();
+            FabricaConexao.testarConexao(); // testa o banco antes de abrir o login
 
             Tela_Login login = new Tela_Login();
             login.setVisible(true);

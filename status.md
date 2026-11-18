@@ -129,7 +129,7 @@ estacionamento-inteligente/
 - [x] Saída → ticket ENCERRADO + vaga LIVRE, em transação (`SaidaVeiculoService`) — Henrique, 17/11
 - [x] Máquina de estados ATIVO → PAGO → ENCERRADO (não paga duas vezes, não sai sem pagar) — Henrique, 17/11
 
-> ℹ️ O `EntradaVeiculoService` (Integrante 5) tinha sido apagado da main no revert de 11/11 e foi recriado com `SELECT ... FOR UPDATE`, `COMMIT`, `ROLLBACK` explícito e logs com horário e cancela. O Integrante 5 pode revisar e continuar a partir dele.
+> Obs: o `EntradaVeiculoService` tinha sumido da main depois do revert do dia 11/11, então refiz ele (com FOR UPDATE, commit e rollback). Integrante 5, dá uma olhada e continua a partir dele.
 
 ### Integrante 5 — Transações e concorrência
 - [x] Transação de entrada com `COMMIT` / `ROLLBACK` (`EntradaVeiculoService`) ✅

@@ -4,6 +4,19 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import model.StatusTicket;
+import model.Ticket;
+import model.TipoVeiculo;
+import service.CalculadoraTarifa;
+import service.EntradaVeiculoService;
+import service.OperacaoInvalidaException;
+import service.SaidaVeiculoService;
+import util.ErroBanco;
+
 /**
  *
  * @author User
@@ -36,91 +49,73 @@ public class Tela_Entrada extends javax.swing.JFrame {
         });
     }
 
-    // ===================== Operações (Integrante 4) =====================
-
-    private static final String CANCELA = "Cancela Principal";
-    private static final java.time.format.DateTimeFormatter FORMATO_DATA =
-            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-    private model.TipoVeiculo tipoEscolhido() {
+    private TipoVeiculo tipoEscolhido() {
         if (btntipocarro.isSelected()) {
-            return model.TipoVeiculo.CARRO;
+            return TipoVeiculo.CARRO;
         }
         if (btntipomoto.isSelected()) {
-            return model.TipoVeiculo.MOTO;
+            return TipoVeiculo.MOTO;
         }
         return null;
     }
 
     private void registrarEntrada() {
         try {
-            service.EntradaVeiculoService.ResultadoEntrada resultado =
-                    new service.EntradaVeiculoService().processarEntrada(txtplaca.getText(), tipoEscolhido(), CANCELA);
+            EntradaVeiculoService.ResultadoEntrada resultado = new EntradaVeiculoService()
+                    .processarEntrada(txtplaca.getText(), tipoEscolhido(), "Cancela Principal");
 
             if (resultado.liberada()) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Entrada liberada!\nVaga: " + resultado.vaga() + "\nTicket nº " + resultado.ticketId(),
-                        "Entrada", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Entrada liberada!\nVaga: " + resultado.vaga()
+                        + "\nTicket: " + resultado.ticketId());
                 txtplaca.setText("");
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Lotação esgotada: não há vagas livres para " + tipoEscolhido().getDescricao().toLowerCase() + ".",
-                        "Entrada recusada", javax.swing.JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Estacionamento lotado, não tem vaga de "
+                        + tipoEscolhido().getDescricao().toLowerCase() + " livre.");
             }
-        } catch (service.OperacaoInvalidaException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(e), "Erro",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (OperacaoInvalidaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
         }
     }
 
-    /** Consulta o ticket, mostra tempo e valor, confirma o pagamento e libera a saída. */
     private void retirarVeiculo() {
-        service.SaidaVeiculoService saida = new service.SaidaVeiculoService();
+        SaidaVeiculoService saida = new SaidaVeiculoService();
         String placa = txtplaca.getText();
 
         try {
-            model.Ticket ticket = saida.consultar(placa);
+            Ticket ticket = saida.consultar(placa);
 
-            if (ticket.getStatus() == model.StatusTicket.ATIVO) {
-                long horas = service.CalculadoraTarifa.horasCobradas(ticket.getDataEntrada(), java.time.LocalDateTime.now());
-                String resumo = "Placa: " + ticket.getPlaca()
+            // se ainda nao pagou mostra o valor e pede pra confirmar
+            if (ticket.getStatus() == StatusTicket.ATIVO) {
+                long horas = CalculadoraTarifa.horasCobradas(ticket.getDataEntrada(), LocalDateTime.now());
+                String entrada = ticket.getDataEntrada().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+
+                String msg = "Placa: " + ticket.getPlaca()
                         + "\nVaga: " + ticket.getVagaIdentificacao()
-                        + "\nEntrada: " + ticket.getDataEntrada().format(FORMATO_DATA)
-                        + "\nHoras cobradas: " + horas
-                        + "\nValor a pagar: " + formatarValor(ticket.getValor())
+                        + "\nEntrada: " + entrada
+                        + "\nHoras: " + horas
+                        + "\nValor: R$ " + String.format("%.2f", ticket.getValor())
                         + "\n\nConfirmar pagamento?";
 
-                int opcao = javax.swing.JOptionPane.showConfirmDialog(this, resumo, "Pagamento",
-                        javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE);
-                if (opcao != javax.swing.JOptionPane.YES_OPTION) {
+                int opcao = JOptionPane.showConfirmDialog(this, msg, "Pagamento", JOptionPane.YES_NO_OPTION);
+                if (opcao != JOptionPane.YES_OPTION) {
                     return;
                 }
-                ticket = saida.pagar(placa);
+                saida.pagar(placa);
             }
 
-            // Ticket PAGO: registra a saída e libera a vaga
             ticket = saida.registrarSaida(placa);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Saída liberada!\nPlaca: " + ticket.getPlaca()
-                    + "\nValor pago: " + formatarValor(ticket.getValor())
-                    + "\nVaga " + ticket.getVagaIdentificacao() + " liberada.",
-                    "Recibo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Saída liberada!\nPlaca: " + ticket.getPlaca()
+                    + "\nValor pago: R$ " + String.format("%.2f", ticket.getValor())
+                    + "\nVaga " + ticket.getVagaIdentificacao() + " liberada.");
             txtplaca.setText("");
 
-        } catch (service.OperacaoInvalidaException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Atenção",
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-        } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(e), "Erro",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (OperacaoInvalidaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
         }
-    }
-
-    private static String formatarValor(java.math.BigDecimal valor) {
-        return java.text.NumberFormat.getCurrencyInstance(java.util.Locale.of("pt", "BR")).format(valor);
     }
 
 

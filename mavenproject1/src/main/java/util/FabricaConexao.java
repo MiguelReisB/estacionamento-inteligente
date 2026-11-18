@@ -10,33 +10,22 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Fábrica de conexões com o MySQL.
  *
- * As credenciais NÃO ficam no código: são lidas do arquivo db.properties,
- * que fica fora do Git (veja db.properties.example).
- *
- * Ordem de busca do arquivo:
- *   1. caminho informado em -Ddb.config=...
- *   2. ./db.properties (pasta onde o programa é executado)
- *   3. db.properties dentro do classpath (src/main/resources)
+ * @author henri
  */
 public class FabricaConexao {
 
-    private static final String ARQUIVO = "db.properties";
-
+    // os dados do banco ficam no db.properties (nao vai pro git)
+    // usa o db.properties.example como modelo
     private static Properties config;
 
-    private FabricaConexao() {
-    }
-
-    private static synchronized Properties getConfig() throws SQLException {
+    private static Properties carregarConfig() throws SQLException {
         if (config != null) {
             return config;
         }
 
         Properties props = new Properties();
-        String caminho = System.getProperty("db.config", ARQUIVO);
-        Path arquivo = Path.of(caminho);
+        Path arquivo = Path.of(System.getProperty("db.config", "db.properties"));
 
         try {
             if (Files.exists(arquivo)) {
@@ -44,49 +33,41 @@ public class FabricaConexao {
                     props.load(in);
                 }
             } else {
-                try (InputStream in = FabricaConexao.class.getClassLoader().getResourceAsStream(ARQUIVO)) {
+                // se nao achou na pasta, tenta no resources
+                try (InputStream in = FabricaConexao.class.getClassLoader().getResourceAsStream("db.properties")) {
                     if (in == null) {
-                        throw new SQLException(
-                                "Arquivo de configuração '" + ARQUIVO + "' não encontrado. "
-                                + "Copie db.properties.example para db.properties e preencha os dados do MySQL.",
-                                ErroBanco.SQLSTATE_CONFIG);
+                        throw new SQLException("Arquivo db.properties não encontrado. Copie o db.properties.example, "
+                                + "renomeie para db.properties e coloque os dados do seu MySQL.", ErroBanco.ERRO_CONFIG);
                     }
                     props.load(in);
                 }
             }
         } catch (IOException e) {
-            throw new SQLException("Não foi possível ler o arquivo " + ARQUIVO + ".", ErroBanco.SQLSTATE_CONFIG, e);
+            throw new SQLException("Não deu para ler o db.properties.", ErroBanco.ERRO_CONFIG, e);
         }
 
         if (props.getProperty("db.url", "").isBlank()) {
-            throw new SQLException("A propriedade 'db.url' não foi preenchida no " + ARQUIVO + ".",
-                    ErroBanco.SQLSTATE_CONFIG);
+            throw new SQLException("Faltou preencher o db.url no db.properties.", ErroBanco.ERRO_CONFIG);
         }
 
         config = props;
         return config;
     }
 
-    /** Conexão comum (autoCommit ligado). */
     public static Connection getConexao() throws SQLException {
-        Properties props = getConfig();
-        return DriverManager.getConnection(
-                props.getProperty("db.url"),
+        Properties props = carregarConfig();
+        return DriverManager.getConnection(props.getProperty("db.url"),
                 props.getProperty("db.usuario", ""),
                 props.getProperty("db.senha", ""));
     }
 
-    /**
-     * Conexão para transações: autoCommit desligado, quem chama
-     * é responsável por fazer commit() ou rollback().
-     */
+    // desativa o autoCommit pra controlar a transacao na mao (commit/rollback)
     public static Connection getConexaoTransacional() throws SQLException {
         Connection conexao = getConexao();
         conexao.setAutoCommit(false);
         return conexao;
     }
 
-    /** Abre e fecha uma conexão só para verificar se o banco está acessível. */
     public static void testarConexao() throws SQLException {
         try (Connection conexao = getConexao()) {
             conexao.isValid(2);

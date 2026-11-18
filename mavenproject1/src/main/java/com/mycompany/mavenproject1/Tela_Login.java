@@ -4,6 +4,9 @@
  */
 package com.mycompany.mavenproject1;
 
+import dao.UsuarioDAO;
+import util.ErroBanco;
+
 /**
  *
  * @author henri
@@ -189,7 +192,8 @@ public class Tela_Login extends javax.swing.JFrame {
         }
 
         try {
-            if (new dao.UsuarioDAO().autenticar(email, senha)) {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if (usuarioDAO.autenticar(email, senha)) {
 
                 javax.swing.JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
 
@@ -203,7 +207,7 @@ public class Tela_Login extends javax.swing.JFrame {
             }
 
         } catch (java.sql.SQLException erro) {
-            javax.swing.JOptionPane.showMessageDialog(this, util.ErroBanco.mensagemAmigavel(erro));
+            javax.swing.JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(erro));
         }
     }//GEN-LAST:event_jButton1MouseClicked
 

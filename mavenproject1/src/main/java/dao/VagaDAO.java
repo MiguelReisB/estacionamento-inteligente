@@ -11,14 +11,10 @@ import model.Vaga;
 import util.FabricaConexao;
 
 /**
- * Acesso à tabela vagas.
  *
- * Os métodos que recebem uma Connection são usados dentro de transações
- * (EntradaVeiculoService / SaidaVeiculoService): quem chama faz commit/rollback.
+ * @author henri
  */
 public class VagaDAO {
-
-    // ---------- operações simples (abrem a própria conexão) ----------
 
     public void cadastrar(String identificacao, TipoVeiculo tipo) throws SQLException {
         String sql = "INSERT INTO vagas (identificacao, tipo, status) VALUES (?, ?, 'LIVRE')";
@@ -41,13 +37,12 @@ public class VagaDAO {
              ResultSet rs = comando.executeQuery()) {
 
             while (rs.next()) {
-                vagas.add(montar(rs));
+                vagas.add(montarVaga(rs));
             }
         }
         return vagas;
     }
 
-    /** Conta vagas por status ("LIVRE" ou "OCUPADA"), de todos os tipos. */
     public int contarPorStatus(String status) throws SQLException {
         String sql = "SELECT COUNT(*) FROM vagas WHERE status = ?";
 
@@ -70,15 +65,12 @@ public class VagaDAO {
         return contarPorStatus(Vaga.OCUPADA);
     }
 
-    // ---------- operações transacionais (recebem a conexão) ----------
+    // os metodos abaixo recebem a conexao porque rodam dentro da transacao
+    // de entrada/saida, quem chama e que faz o commit ou rollback
 
-    /**
-     * Procura uma vaga livre do tipo informado e TRAVA a linha (SELECT ... FOR UPDATE).
-     * Outra transação que tentar pegar a mesma vaga fica esperando até o commit/rollback.
-     * SKIP LOCKED não é usado de propósito, para a disputa ficar visível na demonstração.
-     *
-     * @return a vaga travada, ou null se não houver vaga livre (lotado)
-     */
+    // pega uma vaga livre do tipo e trava a linha com FOR UPDATE,
+    // assim outra cancela nao consegue pegar a mesma vaga ao mesmo tempo
+    // retorna null se nao tiver vaga
     public Vaga buscarLivreComLock(Connection conexao, TipoVeiculo tipo) throws SQLException {
         String sql = "SELECT id, identificacao, tipo, status FROM vagas "
                 + "WHERE tipo = ? AND status = 'LIVRE' ORDER BY id LIMIT 1 FOR UPDATE";
@@ -86,7 +78,10 @@ public class VagaDAO {
         try (PreparedStatement comando = conexao.prepareStatement(sql)) {
             comando.setString(1, tipo.name());
             try (ResultSet rs = comando.executeQuery()) {
-                return rs.next() ? montar(rs) : null;
+                if (rs.next()) {
+                    return montarVaga(rs);
+                }
+                return null;
             }
         }
     }
@@ -101,9 +96,8 @@ public class VagaDAO {
         }
     }
 
-    private Vaga montar(ResultSet rs) throws SQLException {
-        return new Vaga(
-                rs.getInt("id"),
+    private Vaga montarVaga(ResultSet rs) throws SQLException {
+        return new Vaga(rs.getInt("id"),
                 rs.getString("identificacao"),
                 TipoVeiculo.valueOf(rs.getString("tipo")),
                 rs.getString("status"));
