@@ -4,6 +4,11 @@
  */
 package com.mycompany.mavenproject1;
 
+import dao.VagaDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import util.ErroBanco;
+
 /**
  *
  * @author henri
@@ -17,6 +22,19 @@ public class Tela_Principal extends javax.swing.JFrame {
      */
     public Tela_Principal() {
         initComponents();
+        atualizarContadores();
+    }
+
+    private void atualizarContadores() {
+        try {
+            VagaDAO vagaDAO = new VagaDAO();
+            veiculosnum.setText(String.valueOf(vagaDAO.contarOcupadas()));
+            vagasnum.setText(String.valueOf(vagaDAO.contarLivres()));
+        } catch (SQLException e) {
+            veiculosnum.setText("-");
+            vagasnum.setText("-");
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        }
     }
 
     /**

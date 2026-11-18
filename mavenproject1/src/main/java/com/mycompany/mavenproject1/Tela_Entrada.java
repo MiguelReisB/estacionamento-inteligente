@@ -4,6 +4,19 @@
  */
 package com.mycompany.mavenproject1;
 
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import model.StatusTicket;
+import model.Ticket;
+import model.TipoVeiculo;
+import service.CalculadoraTarifa;
+import service.EntradaVeiculoService;
+import service.OperacaoInvalidaException;
+import service.SaidaVeiculoService;
+import util.ErroBanco;
+
 /**
  *
  * @author User
@@ -35,7 +48,76 @@ public class Tela_Entrada extends javax.swing.JFrame {
             }
         });
     }
-    
+
+    private TipoVeiculo tipoEscolhido() {
+        if (btntipocarro.isSelected()) {
+            return TipoVeiculo.CARRO;
+        }
+        if (btntipomoto.isSelected()) {
+            return TipoVeiculo.MOTO;
+        }
+        return null;
+    }
+
+    private void registrarEntrada() {
+        try {
+            EntradaVeiculoService.ResultadoEntrada resultado = new EntradaVeiculoService()
+                    .processarEntrada(txtplaca.getText(), tipoEscolhido(), "Cancela Principal");
+
+            if (resultado.liberada()) {
+                JOptionPane.showMessageDialog(this, "Entrada liberada!\nVaga: " + resultado.vaga()
+                        + "\nTicket: " + resultado.ticketId());
+                txtplaca.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Estacionamento lotado, não tem vaga de "
+                        + tipoEscolhido().getDescricao().toLowerCase() + " livre.");
+            }
+        } catch (OperacaoInvalidaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        }
+    }
+
+    private void retirarVeiculo() {
+        SaidaVeiculoService saida = new SaidaVeiculoService();
+        String placa = txtplaca.getText();
+
+        try {
+            Ticket ticket = saida.consultar(placa);
+
+            // se ainda nao pagou mostra o valor e pede pra confirmar
+            if (ticket.getStatus() == StatusTicket.ATIVO) {
+                long horas = CalculadoraTarifa.horasCobradas(ticket.getDataEntrada(), LocalDateTime.now());
+                String entrada = ticket.getDataEntrada().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+
+                String msg = "Placa: " + ticket.getPlaca()
+                        + "\nVaga: " + ticket.getVagaIdentificacao()
+                        + "\nEntrada: " + entrada
+                        + "\nHoras: " + horas
+                        + "\nValor: R$ " + String.format("%.2f", ticket.getValor())
+                        + "\n\nConfirmar pagamento?";
+
+                int opcao = JOptionPane.showConfirmDialog(this, msg, "Pagamento", JOptionPane.YES_NO_OPTION);
+                if (opcao != JOptionPane.YES_OPTION) {
+                    return;
+                }
+                saida.pagar(placa);
+            }
+
+            ticket = saida.registrarSaida(placa);
+            JOptionPane.showMessageDialog(this, "Saída liberada!\nPlaca: " + ticket.getPlaca()
+                    + "\nValor pago: R$ " + String.format("%.2f", ticket.getValor())
+                    + "\nVaga " + ticket.getVagaIdentificacao() + " liberada.");
+            txtplaca.setText("");
+
+        } catch (OperacaoInvalidaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,7 +228,7 @@ public class Tela_Entrada extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregistrarActionPerformed
-        // TODO add your handling code here:
+        registrarEntrada();
     }//GEN-LAST:event_btnregistrarActionPerformed
 
     private void txtplacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtplacaActionPerformed
@@ -154,7 +236,7 @@ public class Tela_Entrada extends javax.swing.JFrame {
     }//GEN-LAST:event_txtplacaActionPerformed
 
     private void btnretirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnretirarActionPerformed
-        
+        retirarVeiculo();
     }//GEN-LAST:event_btnretirarActionPerformed
 
     private void btntipomotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntipomotoActionPerformed

@@ -2,7 +2,7 @@
 
 > Sistema Inteligente de Gestão de Vagas Rotativas
 > Disciplinas: Banco de Dados | Garantia da Qualidade de Software
-> **Última atualização:** 04/11/2026
+> **Última atualização:** 17/11/2026
 > Legenda: ✅ feito · 🟡 parcial / com problemas · ❌ não iniciado · ⚠️ bug ou risco
 
 ---
@@ -92,12 +92,13 @@ estacionamento-inteligente/
 - [x] Conexão transacional com `autoCommit=false`
 - [x] Login funcional (com `PreparedStatement`) ✅
 - [x] Cadastro funcional (verifica usuário duplicado e senhas iguais)
-- [ ] Corrigir SQL Injection no cadastro (B2)
-- [ ] Hash de senha (BCrypt ou SHA-256 + salt) no cadastro e no login (B3)
-- [ ] Criar `UsuarioDAO` (tirar SQL de dentro das telas)
-- [ ] Remover `BancoDados.java` (H2) e a dependência H2, ou justificar (B4)
-- [ ] Mover credenciais para `db.properties` fora do Git, com um `db.properties.example` (B5)
-- [ ] Mensagens de erro amigáveis para falha de conexão (hoje mostra a mensagem técnica)
+- [x] Corrigir SQL Injection no cadastro (B2) — Henrique, 17/11
+- [x] Hash de senha (BCrypt, `jbcrypt 0.4`) no cadastro e no login (B3) — Henrique, 17/11
+- [x] Criar `UsuarioDAO` (tirar SQL de dentro das telas) — Henrique, 17/11
+- [x] Remover `BancoDados.java` (H2) e a dependência H2 (B4) — Henrique, 17/11
+- [x] Mover credenciais para `db.properties` fora do Git, com um `db.properties.example` (B5) — Henrique, 17/11
+- [x] Mensagens de erro amigáveis para falha de conexão (`util/ErroBanco`) — Henrique, 17/11
+- [x] Script `database/usuarios.sql` (login por e-mail, `email` UNIQUE, `senha CHAR(60)`) — Henrique, 17/11
 
 ### Integrante 3 — Interface gráfica
 - [x] Tela de Login (visual + navegação para Cadastro) ✅
@@ -109,23 +110,26 @@ estacionamento-inteligente/
 - [ ] Botão SAÍDA abrir tela de saída/pagamento
 - [ ] Criar **Tela de Saída / Pagamento** (buscar ticket por placa, mostrar tempo e valor, confirmar pagamento)
 - [ ] Criar **Tela de Vagas** (tabela `JTable` com vagas e status; cadastrar vaga)
-- [ ] Contadores da Tela Principal com dados reais do banco (hoje mostram “N.º”)
+- [x] Contadores da Tela Principal com dados reais do banco — feito junto com o Integrante 4 (Henrique, 17/11)
 - [x] Botões carro/moto marcarem a seleção visualmente✅
 - [x] Botão voltar nas telas internas✅
 - [x] Padronizar cores (já existe: azul `36,105,224` / vermelho `212,45,73`), fontes e mensagens✅
 - [ ] Ajustes B8 (`actionPerformed`, `getPassword()`, mensagem de sucesso no cadastro)
 
 ### Integrante 4 — Operações do estacionamento
-- [x] Modelos `Vaga` e `Ticket` criados (precisam ser alinhados ao banco — B7)
-- [ ] `VagaDAO`: cadastrar, listar, contar livres/ocupadas
-- [ ] `TicketDAO`: buscar ticket ativo por placa, listar ativos
-- [ ] Ligar “Registrar Veículo” ao `EntradaVeiculoService` (validar placa antes)
-- [ ] Validação de placa (formato antigo `ABC1234` e Mercosul `ABC1D23`)
-- [ ] Impedir entrada de placa que já tem ticket ATIVO
-- [ ] Cálculo do valor (regra de tarifa: definir fração/hora, tolerância)
-- [ ] Pagamento → muda ticket para PAGO
-- [ ] Saída → ticket ENCERRADO + vaga LIVRE (também em transação)
-- [ ] Máquina de estados respeitada (não pagar ticket encerrado, não liberar sem pagamento etc.)
+- [x] Modelos `Vaga`, `Ticket`, `TipoVeiculo`, `StatusTicket` alinhados ao banco (B7) — Henrique, 17/11
+- [x] Script `database/operacoes.sql`: tabelas `vagas` (por tipo CARRO/MOTO) e `tickets`, InnoDB, FKs, índices, 10 vagas de carro + 5 de moto — Henrique, 17/11
+- [x] `VagaDAO`: cadastrar, listar, contar livres/ocupadas, buscar vaga livre com `FOR UPDATE` — Henrique, 17/11
+- [x] `TicketDAO`: buscar ticket aberto por placa, listar ativos — Henrique, 17/11
+- [x] Botão “Adicionar Veículo” ligado ao `EntradaVeiculoService` (valida tipo e placa antes) — Henrique, 17/11
+- [x] Validação de placa (formato antigo `ABC1234` e Mercosul `ABC1D23`, aceita hífen) — Henrique, 17/11
+- [x] Impedir entrada de placa que já está no estacionamento (checagem + UNIQUE no banco) — Henrique, 17/11
+- [x] Cálculo do valor: **R$ 5,00 por hora ou fração, sem tolerância, carro e moto iguais** (`CalculadoraTarifa`) — Henrique, 17/11
+- [x] Pagamento → ticket PAGO (botão “Retirar Veículo”: mostra tempo e valor e pede confirmação) — Henrique, 17/11
+- [x] Saída → ticket ENCERRADO + vaga LIVRE, em transação (`SaidaVeiculoService`) — Henrique, 17/11
+- [x] Máquina de estados ATIVO → PAGO → ENCERRADO (não paga duas vezes, não sai sem pagar) — Henrique, 17/11
+
+> Obs: o `EntradaVeiculoService` tinha sumido da main depois do revert do dia 11/11, então refiz ele (com FOR UPDATE, commit e rollback). Integrante 5, dá uma olhada e continua a partir dele.
 
 ### Integrante 5 — Transações e concorrência
 - [x] Transação de entrada com `COMMIT` / `ROLLBACK` (`EntradaVeiculoService`) ✅
@@ -138,9 +142,16 @@ estacionamento-inteligente/
 - [ ] Prints/logs como evidência (inclusive `SHOW ENGINE INNODB STATUS` ou `performance_schema.data_locks`)
 - [ ] Decidir: vaga específica (linha por vaga) **ou** contador de vagas — hoje o código usa vaga específica
 
+**Testes automatizados e GitHub (CI)**
+- [ ] Adicionar JUnit 5 ao `pom.xml` e criar a pasta `src/test/java`
+- [ ] Testes unitários (ex.: hash/login do `UsuarioDAO`, validação de placa, cálculo de tarifa)
+- [ ] Transformar `SimulacaoConcorrencia` e o cenário de rollback em testes automatizados
+- [ ] Workflow do GitHub Actions (`.github/workflows/`) que compila e roda os testes a cada push/PR
+- [ ] MySQL no CI (serviço `mysql` no workflow) para os testes que usam banco
+
 ### Integrante 6 — Qualidade, testes e documentação
 - [ ] Lista de requisitos funcionais (RF) e não funcionais (RNF)
-- [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback)
+- [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
 - [ ] Registro dos resultados dos testes
 - [ ] Relatório técnico
 - [ ] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
@@ -164,7 +175,7 @@ estacionamento-inteligente/
 
 **Fase 3 — Completar o ciclo**
 7. Integrante 4 + 3: tela de saída, pagamento e liberação da vaga.
-8. Integrante 5: simulação das duas cancelas + teste de rollback + evidências.
+8. Integrante 5: simulação das duas cancelas + teste de rollback + evidências + testes automatizados rodando no GitHub Actions.
 
 **Fase 4 — Entrega**
 9. Integrante 6: casos de teste executados, relatório, guia de instalação, roteiro da apresentação.
