@@ -1,0 +1,93 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::             (v4.2.0-M2)
+
+2026-11-17T21:04:12.912-03:00  INFO 13196 --- [           main] e.EstacionamentoApiApplication           : Starting EstacionamentoApiApplication v0.0.1-SNAPSHOT using Java 27 with PID 13196 (C:\Users\Bruno\Desktop\projeto_swing\estacionamento-inteligente\api\target\estacionamento-api-0.0.1-SNAPSHOT.jar started by Bruno in C:\Users\Bruno\Desktop\projeto_swing\estacionamento-inteligente\api)
+2026-11-17T21:04:12.914-03:00  INFO 13196 --- [           main] e.EstacionamentoApiApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-11-17T21:04:13.481-03:00  INFO 13196 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-17T21:04:13.518-03:00  INFO 13196 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 1 JPA repository interface.
+2026-11-17T21:04:14.024-03:00  INFO 13196 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-17T21:04:14.037-03:00  INFO 13196 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-17T21:04:14.037-03:00  INFO 13196 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.26]
+2026-11-17T21:04:14.065-03:00  INFO 13196 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1095 ms
+2026-11-17T21:04:14.229-03:00  INFO 13196 --- [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-17T21:04:14.264-03:00  INFO 13196 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.9.Final
+2026-11-17T21:04:14.631-03:00  INFO 13196 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-17T21:04:14.658-03:00  INFO 13196 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-17T21:04:14.948-03:00  INFO 13196 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38e46765
+2026-11-17T21:04:14.950-03:00  INFO 13196 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-17T21:04:15.098-03:00  INFO 13196 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/loca_veiculos]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.44
+	Default catalog/schema: loca_veiculos/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-17T21:04:15.595-03:00  INFO 13196 --- [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-17T21:04:15.693-03:00  INFO 13196 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-17T21:04:15.757-03:00  INFO 13196 --- [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-17T21:04:15.900-03:00  WARN 13196 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-17T21:04:16.158-03:00  INFO 13196 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-17T21:04:16.171-03:00  INFO 13196 --- [           main] e.EstacionamentoApiApplication           : Started EstacionamentoApiApplication in 3.643 seconds (process running for 4.057)
+2026-11-17T21:04:17.177-03:00  INFO 13196 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-17T21:04:17.177-03:00  INFO 13196 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-17T21:04:17.178-03:00  INFO 13196 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: select u1_0.id,u1_0.email,u1_0.nome,u1_0.senha from usuarios u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.nome,u1_0.senha from usuarios u1_0 where u1_0.email=?
+Hibernate: insert into usuarios (email,nome,senha) values (?,?,?)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::             (v4.2.0-M2)
+
+2026-11-17T21:11:16.384-03:00  INFO 14564 --- [           main] e.EstacionamentoApiApplication           : Starting EstacionamentoApiApplication v0.0.1-SNAPSHOT using Java 27 with PID 14564 (C:\Users\Bruno\Desktop\projeto_swing\estacionamento-inteligente\api\target\estacionamento-api-0.0.1-SNAPSHOT.jar started by Bruno in C:\Users\Bruno\Desktop\projeto_swing\estacionamento-inteligente\api)
+2026-11-17T21:11:16.387-03:00  INFO 14564 --- [           main] e.EstacionamentoApiApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-11-17T21:11:17.013-03:00  INFO 14564 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-17T21:11:17.057-03:00  INFO 14564 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 1 JPA repository interface.
+2026-11-17T21:11:17.496-03:00  INFO 14564 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-17T21:11:17.517-03:00  INFO 14564 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-17T21:11:17.518-03:00  INFO 14564 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.26]
+2026-11-17T21:11:17.541-03:00  INFO 14564 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1095 ms
+2026-11-17T21:11:17.721-03:00  INFO 14564 --- [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-17T21:11:17.756-03:00  INFO 14564 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.9.Final
+2026-11-17T21:11:18.076-03:00  INFO 14564 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-17T21:11:18.102-03:00  INFO 14564 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-17T21:11:18.359-03:00  INFO 14564 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4cd5fc46
+2026-11-17T21:11:18.360-03:00  INFO 14564 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-17T21:11:18.434-03:00  INFO 14564 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/loca_veiculos]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.44
+	Default catalog/schema: loca_veiculos/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-17T21:11:18.927-03:00  INFO 14564 --- [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-17T21:11:18.962-03:00  INFO 14564 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-17T21:11:19.025-03:00  INFO 14564 --- [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-17T21:11:19.175-03:00  WARN 14564 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-17T21:11:19.456-03:00  INFO 14564 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-17T21:11:19.471-03:00  INFO 14564 --- [           main] e.EstacionamentoApiApplication           : Started EstacionamentoApiApplication in 3.484 seconds (process running for 3.926)
+2026-11-17T21:11:19.575-03:00  INFO 14564 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-17T21:11:19.576-03:00  INFO 14564 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-17T21:11:19.577-03:00  INFO 14564 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
