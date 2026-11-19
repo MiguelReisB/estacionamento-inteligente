@@ -1,2 +1,27 @@
 /desktop/target/
 /api/target/
+
+# Maven
+target/
+**/target/
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Credenciais locais do banco (usar db.properties.example como modelo)
+db.properties
+
+# Banco H2 antigo
+**/dados/
