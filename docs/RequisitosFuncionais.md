@@ -10,8 +10,7 @@
 | RF06 | Estacionamento lotado | Impedir novas entradas quando não houver vagas disponíveis. | Alta |
 | RF07 | Controle de concorrência | Evitar que duas operações ocupem simultaneamente a mesma vaga. | Alta |
 | RF08 | Registro de saída | Permitir registrar a saída de veículos. | Média |
-| RF09 | Validação de pagamento | Verificar a situação do pagamento antes de liberar a saída, caso aplicável. | Média |
-| RF10 | Controle de transações | Garantir operações consistentes por meio de COMMIT e ROLLBACK. | Alta |
-| RF11 | Mensagens ao usuário | Informar o resultado das operações e eventuais erros. | Média |
+| RF09 | Validação de pagamento | Verificar a situação do pagamento antes de liberar a saída. | Média |
+| RF10 | Mensagens ao usuário | Informar o resultado das operações e eventuais erros. | Média |
 
 
