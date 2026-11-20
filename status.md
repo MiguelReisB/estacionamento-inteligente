@@ -2,7 +2,7 @@
 
 > Sistema Inteligente de Gestão de Vagas Rotativas
 > Disciplinas: Banco de Dados | Garantia da Qualidade de Software
-> **Última atualização:** 17/11/2026
+> **Última atualização:** 20/11/2026
 > Legenda: ✅ feito · 🟡 parcial / com problemas · ❌ não iniciado · ⚠️ bug ou risco
 
 ---
@@ -71,9 +71,9 @@ estacionamento-inteligente/
 ## 4. Progresso por integrante
 
 ### Integrante 1 — Banco de dados e modelagem
-- [ ] Modelo conceitual
+- [X] Modelo conceitual
 - [X] Modelo lógico
-- [ ] Modelo físico
+- [X] Modelo físico
 - [X] Tabela `usuarios` revisada (coluna de senha com tamanho para hash, `nome`/login `UNIQUE`)
 - [X] Tabela `vagas` (ex.: `id`, `identificacao` UNIQUE, `tipo` CARRO/MOTO, `status` LIVRE/OCUPADA)
 - [X] Tabela `tickets` (ex.: `id`, `placa`, `vaga_id` FK, `data_entrada`, `data_saida`, `cancela_entrada`, `valor`, `status` ATIVO/PAGO/ENCERRADO)
@@ -83,7 +83,7 @@ estacionamento-inteligente/
 - [X] Índices: `vagas(status)` (essencial para o `FOR UPDATE` não travar a tabela inteira), `tickets(placa)`, `tickets(status)`
 - [ ] Script único `database/schema.sql` + `database/dados_teste.sql`
 - [X] Padronizar o nome do banco (hoje: `teste` no código, `projeto_a3` no dump)
-- [ ] MER documentado em `docs/`
+- [X] MER documentado em `docs/`
 
 > 🔗 **Bloqueia:** Integrantes 4 e 5 (o service já referencia `vagas` e `tickets`).
 
