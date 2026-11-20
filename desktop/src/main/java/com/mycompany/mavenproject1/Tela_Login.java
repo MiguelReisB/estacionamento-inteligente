@@ -4,9 +4,6 @@
  */
 package com.mycompany.mavenproject1;
 
-import dao.UsuarioDAO;
-import util.ErroBanco;
-
 /**
  *
  * @author henri
@@ -20,6 +17,7 @@ public class Tela_Login extends javax.swing.JFrame {
      */
     public Tela_Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -131,7 +129,6 @@ public class Tela_Login extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 5, 6, 0);
         jPanel1.add(jButton2, gridBagConstraints);
 
@@ -148,6 +145,7 @@ public class Tela_Login extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 51;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(32, 10, 0, 0);
@@ -185,15 +183,17 @@ public class Tela_Login extends javax.swing.JFrame {
         String senha = new String(jPasswordField1.getPassword());
 
         if (email.isEmpty() || senha.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this, "Informe o e-mail e a senha!");
-            
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Informe o e-mail e a senha!");
+
             return;
         }
 
         try {
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            if (usuarioDAO.autenticar(email, senha)) {
+
+            int resposta = UsuarioApiClient.autenticar(email, senha);
+
+            if (resposta == 200) {
 
                 javax.swing.JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
 
@@ -201,13 +201,20 @@ public class Tela_Login extends javax.swing.JFrame {
                 principal.setVisible(true);
                 this.dispose();
 
+            } else if (resposta == 401) {
+
+                javax.swing.JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!");
+
             } else {
-                javax.swing.JOptionPane.showMessageDialog(
-                        this, "E-mail ou senha inválidos!");
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Erro inesperado ao realizar login. Código: " + resposta);
             }
 
-        } catch (java.sql.SQLException erro) {
-            javax.swing.JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(erro));
+        } catch (Exception erro) {
+
+            erro.printStackTrace();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Não foi possível conectar à API.");
         }
     }//GEN-LAST:event_jButton1MouseClicked
 

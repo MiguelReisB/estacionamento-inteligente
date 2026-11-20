@@ -11,10 +11,7 @@ import javax.swing.JFrame;
  * @author henri
  */
 
-import dao.UsuarioDAO;
 import javax.swing.JOptionPane;
-import java.sql.SQLException;
-import util.ErroBanco;
 
 public class Tela_Cadastro extends javax.swing.JFrame {
     
@@ -26,6 +23,7 @@ public class Tela_Cadastro extends javax.swing.JFrame {
      */
     public Tela_Cadastro() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -189,27 +187,36 @@ public class Tela_Cadastro extends javax.swing.JFrame {
         
         return;
     }
-
+    
     try {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        UsuarioDAO.ResultadoCadastro resultado = usuarioDAO.cadastrar(nome, email, senha);
 
-        if (resultado == UsuarioDAO.ResultadoCadastro.EMAIL_JA_CADASTRADO) {
+        int status = UsuarioApiClient.cadastrar(nome, email, senha);
+
+        if (status == 201) {
+
+            JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+
+            Tela_Login login = new Tela_Login();
+            login.setVisible(true);
+            this.dispose();
+
+        } else if (status == 409) {
+
             JOptionPane.showMessageDialog(this, "Este e-mail já está cadastrado!");
-            return;
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Não foi possível cadastrar o usuário. Código: " + status);
         }
 
-        JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+    } catch (Exception e) {
 
-        Tela_Login login = new Tela_Login();
-        login.setVisible(true);
-        this.dispose();
+        JOptionPane.showMessageDialog(this, "Erro ao conectar com o servidor!");
 
-    }
-    catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        e.printStackTrace();
     }
 
+    
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
