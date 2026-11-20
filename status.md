@@ -72,17 +72,17 @@ estacionamento-inteligente/
 
 ### Integrante 1 — Banco de dados e modelagem
 - [ ] Modelo conceitual
-- [ ] Modelo lógico
+- [X] Modelo lógico
 - [ ] Modelo físico
-- [ ] Tabela `usuarios` revisada (coluna de senha com tamanho para hash, `nome`/login `UNIQUE`)
-- [ ] Tabela `vagas` (ex.: `id`, `identificacao` UNIQUE, `tipo` CARRO/MOTO, `status` LIVRE/OCUPADA)
-- [ ] Tabela `tickets` (ex.: `id`, `placa`, `vaga_id` FK, `data_entrada`, `data_saida`, `cancela_entrada`, `valor`, `status` ATIVO/PAGO/ENCERRADO)
-- [ ] (Opcional) Tabela `pagamentos` ou `cancelas`
-- [ ] Todas as tabelas com `ENGINE=InnoDB` (obrigatório para lock de linha)
-- [ ] Restrições: PK, FK, `CHECK`/`ENUM` de status, `NOT NULL`
-- [ ] Índices: `vagas(status)` (essencial para o `FOR UPDATE` não travar a tabela inteira), `tickets(placa)`, `tickets(status)`
+- [X] Tabela `usuarios` revisada (coluna de senha com tamanho para hash, `nome`/login `UNIQUE`)
+- [X] Tabela `vagas` (ex.: `id`, `identificacao` UNIQUE, `tipo` CARRO/MOTO, `status` LIVRE/OCUPADA)
+- [X] Tabela `tickets` (ex.: `id`, `placa`, `vaga_id` FK, `data_entrada`, `data_saida`, `cancela_entrada`, `valor`, `status` ATIVO/PAGO/ENCERRADO)
+- [X] (Opcional) Tabela `pagamentos` ou `cancelas` - não será feito
+- [X] Todas as tabelas com `ENGINE=InnoDB` (obrigatório para lock de linha)
+- [X] Restrições: PK, FK, `CHECK`/`ENUM` de status, `NOT NULL`
+- [X] Índices: `vagas(status)` (essencial para o `FOR UPDATE` não travar a tabela inteira), `tickets(placa)`, `tickets(status)`
 - [ ] Script único `database/schema.sql` + `database/dados_teste.sql`
-- [ ] Padronizar o nome do banco (hoje: `teste` no código, `projeto_a3` no dump)
+- [X] Padronizar o nome do banco (hoje: `teste` no código, `projeto_a3` no dump)
 - [ ] MER documentado em `docs/`
 
 > 🔗 **Bloqueia:** Integrantes 4 e 5 (o service já referencia `vagas` e `tickets`).
