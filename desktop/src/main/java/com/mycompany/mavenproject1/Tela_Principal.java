@@ -4,6 +4,11 @@
  */
 package com.mycompany.mavenproject1;
 
+import dao.VagaDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import util.ErroBanco;
+
 /**
  *
  * @author henri
@@ -17,7 +22,19 @@ public class Tela_Principal extends javax.swing.JFrame {
      */
     public Tela_Principal() {
         initComponents();
-        setLocationRelativeTo(null);
+        atualizarContadores();
+    }
+
+    private void atualizarContadores() {
+        try {
+            VagaDAO vagaDAO = new VagaDAO();
+            veiculosnum.setText(String.valueOf(vagaDAO.contarOcupadas()));
+            vagasnum.setText(String.valueOf(vagaDAO.contarLivres()));
+        } catch (SQLException e) {
+            veiculosnum.setText("-");
+            vagasnum.setText("-");
+            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        }
     }
 
     /**
@@ -28,85 +45,187 @@ public class Tela_Principal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jFrame1 = new javax.swing.JFrame();
+        pnlMonitor = new javax.swing.JPanel();
+        lblveiculos = new javax.swing.JLabel();
+        lblvagas = new javax.swing.JLabel();
+        veiculosnum = new javax.swing.JLabel();
+        vagasnum = new javax.swing.JLabel();
+        btnEntrada = new javax.swing.JButton();
+        lblEstacionamento = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-
-        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 371, Short.MAX_VALUE)
-        );
+        jMenuCadastros = new javax.swing.JMenu();
+        jMenuItemListagemUsuarios = new javax.swing.JMenuItem();
+        jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
+        jMenuItemListagemVeiculos = new javax.swing.JMenuItem();
+        jMenuItemCadastrarVeiculo = new javax.swing.JMenuItem();
+        jMenuItemListagemEstacionamento = new javax.swing.JMenuItem();
+        jMenuItemCadastrarEstacionamento = new javax.swing.JMenuItem();
+        jMenuOperacoes = new javax.swing.JMenu();
+        jMenuItemEntrada = new javax.swing.JMenuItem();
+        jMenuItemSaida = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jMenu1.setText("Cadastros");
+        jMenuCadastros.setText("Cadastros");
 
-        jMenuItem1.setText("Listagem Usuários");
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
+        jMenuItemListagemUsuarios.setText("Listagem Usuarios");
+        jMenuItemListagemUsuarios.addActionListener(this::abrirListagemUsuarios);
+        jMenuCadastros.add(jMenuItemListagemUsuarios);
 
-        jMenuItem2.setText("Cadastrar Usuário");
-        jMenu1.add(jMenuItem2);
+        jMenuItemCadastrarUsuario.setText("Cadastrar Usuario");
+        jMenuItemCadastrarUsuario.addActionListener(this::abrirCadastroUsuario);
+        jMenuCadastros.add(jMenuItemCadastrarUsuario);
 
-        jMenuItem3.setText("Listagem Veículos");
-        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
-        jMenu1.add(jMenuItem3);
+        jMenuItemListagemVeiculos.setText("Listagem Veiculos");
+        jMenuItemListagemVeiculos.addActionListener(this::abrirEntradaVeiculo);
+        jMenuCadastros.add(jMenuItemListagemVeiculos);
 
-        jMenuItem4.setText("Cadastrar Veículos");
-        jMenu1.add(jMenuItem4);
+        jMenuItemCadastrarVeiculo.setText("Cadastrar Veiculo");
+        jMenuItemCadastrarVeiculo.addActionListener(this::abrirEntradaVeiculo);
+        jMenuCadastros.add(jMenuItemCadastrarVeiculo);
 
-        jMenuItem5.setText("Listagem Estacionameto");
-        jMenu1.add(jMenuItem5);
+        jMenuItemListagemEstacionamento.setText("Listagem Estacionamento");
+        jMenuItemListagemEstacionamento.addActionListener(this::abrirEntradaVeiculo);
+        jMenuCadastros.add(jMenuItemListagemEstacionamento);
 
-        jMenuItem6.setText("Cadastrar Estacionamento");
-        jMenu1.add(jMenuItem6);
+        jMenuItemCadastrarEstacionamento.setText("Cadastrar Estacionamento");
+        jMenuItemCadastrarEstacionamento.addActionListener(this::abrirEntradaVeiculo);
+        jMenuCadastros.add(jMenuItemCadastrarEstacionamento);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenuCadastros);
 
+        jMenuOperacoes.setText("Operacoes");
+
+        jMenuItemEntrada.setText("Entrada de Veiculo");
+        jMenuItemEntrada.addActionListener(this::abrirEntradaVeiculo);
+        jMenuOperacoes.add(jMenuItemEntrada);
+
+        jMenuItemSaida.setText("Saida de Veiculo");
+        jMenuItemSaida.addActionListener(this::abrirEntradaVeiculo);
+        jMenuOperacoes.add(jMenuItemSaida);
+
+        jMenuBar1.add(jMenuOperacoes);
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        pnlMonitor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lblveiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carro.png"))); // NOI18N
+        lblveiculos.setText("Veículos Estacionados");
+
+        lblvagas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vagas.png"))); // NOI18N
+        lblvagas.setText("Vagas Disponíveis");
+
+        veiculosnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        veiculosnum.setText("N.º");
+        veiculosnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        vagasnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        vagasnum.setText("N.º");
+        vagasnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout pnlMonitorLayout = new javax.swing.GroupLayout(pnlMonitor);
+        pnlMonitor.setLayout(pnlMonitorLayout);
+        pnlMonitorLayout.setHorizontalGroup(
+            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMonitorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMonitorLayout.createSequentialGroup()
+                        .addComponent(lblveiculos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(lblvagas))
+                    .addGroup(pnlMonitorLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(veiculosnum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(vagasnum)
+                        .addGap(38, 38, 38)))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
+        pnlMonitorLayout.setVerticalGroup(
+            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMonitorLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(veiculosnum, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(vagasnum, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblveiculos)
+                    .addComponent(lblvagas))
+                .addGap(14, 14, 14))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 19;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 31, 0, 33);
+        getContentPane().add(pnlMonitor, gridBagConstraints);
+
+        btnEntrada.setBackground(new java.awt.Color(36, 105, 224));
+        btnEntrada.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrada.setText("ENTRADA");
+        btnEntrada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEntradaMouseClicked(evt);
+            }
+        });
+        btnEntrada.addActionListener(this::btnEntradaActionPerformed);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 40;
+        gridBagConstraints.ipady = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 129, 39, 0);
+        getContentPane().add(btnEntrada, gridBagConstraints);
+
+        lblEstacionamento.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        lblEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEstacionamento.setText("Estacionamento");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(38, 31, 0, 33);
+        getContentPane().add(lblEstacionamento, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
-        Listagem_cadastro listagem_cad = new Listagem_cadastro();
-        listagem_cad.setVisible(true);
+    private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
+        Tela_Entrada TelaDeEntrada = new Tela_Entrada();
+        TelaDeEntrada.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jMenuItem1MouseClicked
+    }//GEN-LAST:event_btnEntradaActionPerformed
+
+    private void btnEntradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntradaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntradaMouseClicked
+
+    private void abrirListagemUsuarios(java.awt.event.ActionEvent evt) {
+        new Listagem_cadastro().setVisible(true);
+        this.dispose();
+    }
+
+    private void abrirCadastroUsuario(java.awt.event.ActionEvent evt) {
+        new Tela_Cadastro().setVisible(true);
+        this.dispose();
+    }
+
+    private void abrirEntradaVeiculo(java.awt.event.ActionEvent evt) {
+        new Tela_Entrada().setVisible(true);
+        this.dispose();
+    }
 
     /**
      * @param args the command line arguments
@@ -134,14 +253,23 @@ public class Tela_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JButton btnEntrada;
+    private javax.swing.JLabel lblEstacionamento;
+    private javax.swing.JLabel lblvagas;
+    private javax.swing.JLabel lblveiculos;
+    private javax.swing.JPanel pnlMonitor;
+    private javax.swing.JLabel vagasnum;
+    private javax.swing.JLabel veiculosnum;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenu jMenuCadastros;
+    private javax.swing.JMenuItem jMenuItemListagemUsuarios;
+    private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
+    private javax.swing.JMenuItem jMenuItemListagemVeiculos;
+    private javax.swing.JMenuItem jMenuItemCadastrarVeiculo;
+    private javax.swing.JMenuItem jMenuItemListagemEstacionamento;
+    private javax.swing.JMenuItem jMenuItemCadastrarEstacionamento;
+    private javax.swing.JMenu jMenuOperacoes;
+    private javax.swing.JMenuItem jMenuItemEntrada;
+    private javax.swing.JMenuItem jMenuItemSaida;
     // End of variables declaration//GEN-END:variables
 }
