@@ -152,9 +152,9 @@ estacionamento-inteligente/
 ### Integrante 6 — Qualidade, testes e documentação
 - [X] Lista de requisitos funcionais (RF) e não funcionais (RNF)
 > Se encontram na pasta docs - Miguel Reis (18/11/2026)
-- [ ] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
-- [ ] Registro dos resultados dos testes
-- [ ] Relatório técnico
+- [X] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
+- [X] Registro dos resultados dos testes
+- [X] Relatório técnico
 - [ ] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
 - [ ] README completo
 - [ ] Roteiro da demonstração
