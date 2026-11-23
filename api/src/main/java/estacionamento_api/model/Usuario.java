@@ -11,6 +11,9 @@ import jakarta.persistence.Column;
 @Table(name = "usuarios")
 public class Usuario {
 
+    public static final String ADMIN = "ADMIN";
+    public static final String OPERADOR = "OPERADOR";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,8 +24,13 @@ public class Usuario {
     @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(nullable = false, length = 8)
+    // guarda o hash do bcrypt (60 caracteres)
+    @Column(nullable = false, length = 60)
     private String senha;
+
+    // ADMIN ou OPERADOR
+    @Column(nullable = false, length = 10)
+    private String perfil = OPERADOR;
 
     public Usuario() {
     }
@@ -58,5 +66,16 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-}
 
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+
+    public boolean isAdmin() {
+        return ADMIN.equals(perfil);
+    }
+}
