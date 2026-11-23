@@ -82,16 +82,6 @@ Conecte-se ao seu servidor MySQL (via MySQL Workbench, DBeaver ou terminal) e ex
 1. **`database/usuarios.sql`**: Cria o banco de dados `projeto_a3` e a tabela de usuários com restrição `UNIQUE` de e-mail.
 2. **`database/operacoes.sql`**: Cria as tabelas `vagas` e `tickets`, as restrições de integridade referencial (`FOREIGN KEY`), o índice exclusivo de veículos ativos (`placa_aberta`) e faz a carga inicial das 15 vagas (`C01`–`C10` para carros e `M01`–`M05` para motos).
 
-### 6.2 Configuração das Credenciais (`db.properties`)
-Crie um arquivo chamado `db.properties` dentro da pasta `desktop/src/main/resources/` (ou copie de `desktop/db.properties.example` e renomeie para "db.properties"):
-
-```properties
-db.url=jdbc:mysql://localhost:3306/projeto_a3?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-db.usuario=seu_usuario_mysql
-db.senha=sua_senha_mysql
-```
-> **Nota:** O arquivo `db.properties` contém credenciais locais e é ignorado pelo `.gitignore` por boas práticas de segurança.
-
 ---
 
 ## 7. Execução
