@@ -158,7 +158,7 @@ estacionamento-inteligente/
 - [ ] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
 - [ ] README completo
 - [ ] Roteiro da demonstração
-- [ ] Remover a pasta `mavenproject1/` depois que as imagens forem movidas
+- [X] Remover a pasta `mavenproject1/` depois que as imagens forem movidas
 
 ---
 
