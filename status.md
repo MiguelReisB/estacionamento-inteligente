@@ -155,8 +155,8 @@ estacionamento-inteligente/
 - [X] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
 - [X] Registro dos resultados dos testes
 - [X] Relatório técnico
-- [ ] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
-- [ ] README completo
+- [X] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
+- [X] README completo
 - [ ] Roteiro da demonstração
 - [X] Remover a pasta `mavenproject1/` depois que as imagens forem movidas
 
