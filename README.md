@@ -10,12 +10,11 @@ Sistema desktop de gerenciamento de estacionamento desenvolvido para as discipli
 - [3. Tecnologias Utilizadas](#3-tecnologias-utilizadas)
 - [4. Pré-requisitos](#4-pré-requisitos)
 - [5. Instalação](#5-instalação)
-- [6. Configuração do Banco de Dados](#6-configuração-do-banco-de-dados)
-- [7. Execução](#7-execução)
-- [8. Testes Automatizados](#8-testes-automatizados)
-- [9. Estrutura do Projeto](#9-estrutura-do-projeto)
-- [10. Observações e Regras Importantes](#10-observações-e-regras-importantes)
-- [11. Autores](#11-autores)
+- [6. Execução](#7-execução)
+- [7. Testes Automatizados](#8-testes-automatizados)
+- [8. Estrutura do Projeto](#9-estrutura-do-projeto)
+- [9. Observações e Regras Importantes](#10-observações-e-regras-importantes)
+- [10. Autores](#11-autores)
 
 ---
 
@@ -74,17 +73,9 @@ cd estacionamento-inteligente
 
 ---
 
-## 6. Configuração do Banco de Dados
-
-### 6.1 Execução dos Scripts SQL
-Conecte-se ao seu servidor MySQL (via MySQL Workbench, DBeaver ou terminal) e execute os scripts na ordem exata:
-
-1. **`database/usuarios.sql`**: Cria o banco de dados `projeto_a3` e a tabela de usuários com restrição `UNIQUE` de e-mail.
-2. **`database/operacoes.sql`**: Cria as tabelas `vagas` e `tickets`, as restrições de integridade referencial (`FOREIGN KEY`), o índice exclusivo de veículos ativos (`placa_aberta`) e faz a carga inicial das 15 vagas (`C01`–`C10` para carros e `M01`–`M05` para motos).
-
 ---
 
-## 7. Execução
+## 6. Execução
 
 ### Opção 1: Via NetBeans / IDE
 1. Abra o módulo `desktop` na IDE.
@@ -104,7 +95,7 @@ mvn exec:java
 
 ---
 
-## 8. Testes Automatizados
+## 7. Testes Automatizados
 
 O projeto conta com uma suíte de testes unitários e de integração utilizando **JUnit 5**, cobrindo o fluxo operacional e os requisitos obrigatórios de Banco de Dados.
 
@@ -124,7 +115,7 @@ mvn test
 
 ---
 
-## 9. Estrutura do Projeto
+## 8. Estrutura do Projeto
 
 ```text
 estacionamento-inteligente/
@@ -155,14 +146,14 @@ estacionamento-inteligente/
 
 ---
 
-## 10. Observações e Regras Importantes
+## 9. Observações e Regras Importantes
 * **Mecanismo Anti-Colisão no Banco:** A tabela `tickets` conta com a coluna gerada `placa_aberta` com restrição `UNIQUE`. Isso garante a nível de integridade física no MySQL que nenhum veículo possa ter mais de um ticket com status `ATIVO` ou `PAGO` ao mesmo tempo.
 * **Lock Pessimista:** Utiliza `SELECT ... FOR UPDATE` sobre as linhas da tabela `vagas`, o que bloqueia o registro durante a transação e previne inconsistências por concorrência (*Race Conditions*).
 * **Restituição do Ambiente de Teste:** As classes de teste contam com rotinas `@BeforeEach` e `@AfterAll` para garantir que a base de dados não permaneça corrompida ou bloqueada após a execução das baterias de testes.
 
 ---
 
-## 11. Autores
+## 10. Autores
 Trabalho desenvolvido por:
 
 * **Bruno Carvalho Vieira** - RA: 192510091
