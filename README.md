@@ -1,10 +1,10 @@
-# 🚗Sistema Inteligente de Gestão de Vagas Rotativas | Estacionamento Inteligente
+# Sistema Inteligente de Gestão de Vagas Rotativas | Estacionamento Inteligente
 
 Sistema desktop de gerenciamento de estacionamento desenvolvido para as disciplinas de **Banco de Dados** e **Garantia da Qualidade de Software** (Projeto A3). O projeto contempla controle de fluxo de cancelas, vagas em tempo real, cálculo dinâmico de tarifas, autenticação segura de operadores e tratamento rigoroso de integridade transacional (ACID) e concorrência no banco de dados.
 
 ---
 
-## 📌Sumário
+## Sumário
 - [1. Sobre o Projeto](#1-sobre-o-projeto)
 - [2. Funcionalidades](#2-funcionalidades)
 - [3. Tecnologias Utilizadas](#3-tecnologias-utilizadas)
