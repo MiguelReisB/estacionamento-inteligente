@@ -143,21 +143,20 @@ estacionamento-inteligente/
 - [ ] Decidir: vaga específica (linha por vaga) **ou** contador de vagas — hoje o código usa vaga específica
 
 **Testes automatizados e GitHub (CI)**
-- [ ] Adicionar JUnit 5 ao `pom.xml` e criar a pasta `src/test/java`
-- [ ] Testes unitários (ex.: hash/login do `UsuarioDAO`, validação de placa, cálculo de tarifa)
-- [ ] Transformar `SimulacaoConcorrencia` e o cenário de rollback em testes automatizados
+- [X] Adicionar JUnit 5 ao `pom.xml` e criar a pasta `src/test/java`
+- [X] Testes unitários (ex.: hash/login do `UsuarioDAO`, validação de placa, cálculo de tarifa)
+- [X] Transformar `SimulacaoConcorrencia` e o cenário de rollback em testes automatizados
 - [ ] Workflow do GitHub Actions (`.github/workflows/`) que compila e roda os testes a cada push/PR
 - [ ] MySQL no CI (serviço `mysql` no workflow) para os testes que usam banco
 
 ### Integrante 6 — Qualidade, testes e documentação
 - [X] Lista de requisitos funcionais (RF) e não funcionais (RNF)
-> Se encontram na pasta docs - Miguel Reis (18/11/2026)
 - [X] Casos de teste (login, cadastro, entrada, lotação esgotada, pagamento, saída, concorrência, rollback) — a automação desses testes e o CI no GitHub ficam com o Integrante 5
 - [X] Registro dos resultados dos testes
 - [X] Relatório técnico
 - [X] Guia de instalação: JDK, MySQL, criar banco, rodar script, configurar credenciais, rodar o projeto
 - [X] README completo
-- [ ] Roteiro da demonstração
+- [X] Roteiro da demonstração
 - [X] Remover a pasta `mavenproject1/` depois que as imagens forem movidas
 
 ---
