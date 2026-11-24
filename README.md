@@ -77,21 +77,10 @@ cd estacionamento-inteligente
 
 ## 6. Execução
 
-### Opção 1: Via NetBeans / IDE
+### Via NetBeans / IDE:
 1. Abra o módulo `desktop` na IDE.
 2. Aguarde o download das dependências do Maven.
 3. Clique com o botão direito no projeto `desktop` $\rightarrow$ **Run** (ou execute a classe principal `com.mycompany.mavenproject1.Mavenproject1`).
-
-### Opção 2: Via Linha de Comando (Maven)
-No diretório raiz do repositório:
-```bash
-# Compilar os módulos
-mvn clean install -DskipTests
-
-# Executar a aplicação Desktop
-cd desktop
-mvn exec:java
-```
 
 ---
 
