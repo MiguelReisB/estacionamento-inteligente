@@ -19,6 +19,14 @@ public class Mavenproject1 {
 
     public static void main(String[] args) {
 
+        // visual padrao do sistema operacional (no Windows, o cinza do Windows)
+        try {
+            javax.swing.UIManager.setLookAndFeel(
+                    javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            // se nao der, fica o visual padrao do Java
+        }
+
         SwingUtilities.invokeLater(() -> {
 
             Tela_Carregamento carregamento =

@@ -48,6 +48,22 @@ public class TicketDAO {
         return tickets;
     }
 
+    // ATIVO e PAGO: todos os carros que ainda estao no patio
+    public List<Ticket> listarAbertos() throws SQLException {
+        String sql = SELECT_TICKET + "WHERE t.status IN ('ATIVO','PAGO') ORDER BY t.data_entrada";
+        List<Ticket> tickets = new ArrayList<>();
+
+        try (Connection conexao = FabricaConexao.getConexao();
+             PreparedStatement comando = conexao.prepareStatement(sql);
+             ResultSet rs = comando.executeQuery()) {
+
+            while (rs.next()) {
+                tickets.add(montarTicket(rs));
+            }
+        }
+        return tickets;
+    }
+
     // daqui pra baixo sao usados dentro das transacoes
 
     public Ticket buscarAberto(Connection conexao, String placa) throws SQLException {

@@ -1,275 +1,149 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.mavenproject1;
 
-import dao.VagaDAO;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import util.ErroBanco;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 /**
+ * Janela principal depois do login. A barra de ferramentas mostra
+ * Painel, Entrada e Saída para todos; Vagas e Usuários so para administrador.
  *
  * @author henri
  */
-public class Tela_Principal extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Tela_Principal.class.getName());
+public class Tela_Principal extends JFrame {
 
-    /**
-     * Creates new form Tela_Principal
-     */
+    public static final String PAINEL = "Painel";
+    public static final String ENTRADA = "Entrada";
+    public static final String SAIDA = "Saída";
+    public static final String VAGAS = "Vagas";
+    public static final String USUARIOS = "Usuários";
+
+    // cada tela interna sabe se atualizar quando aparece
+    public interface Atualizavel {
+        void aoMostrar();
+
+        default void aoSair() {
+        }
+    }
+
+    private final CardLayout cartoes = new CardLayout();
+    private final JPanel conteudo = new JPanel(cartoes);
+    private final Map<String, JToggleButton> botoes = new LinkedHashMap<>();
+    private final Map<String, Atualizavel> telas = new LinkedHashMap<>();
+    private final JLabel barraStatus = Estilo.rotulo(" ", Font.PLAIN, 12);
+    private String telaAtual;
+
     public Tela_Principal() {
-        initComponents();
-        atualizarContadores();
-    }
+        UsuarioInfo usuario = Sessao.getUsuario();
 
-    private void atualizarContadores() {
-        try {
-            VagaDAO vagaDAO = new VagaDAO();
-            veiculosnum.setText(String.valueOf(vagaDAO.contarOcupadas()));
-            vagasnum.setText(String.valueOf(vagaDAO.contarLivres()));
-        } catch (SQLException e) {
-            veiculosnum.setText("-");
-            vagasnum.setText("-");
-            JOptionPane.showMessageDialog(this, ErroBanco.mensagemAmigavel(e));
+        setTitle("Estacionamento Inteligente");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(Estilo.LARGURA_JANELA, Estilo.ALTURA_JANELA);
+        setMinimumSize(new Dimension(1000, 680));
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(Estilo.FUNDO);
+        getContentPane().setLayout(new BorderLayout());
+
+        JToolBar barra = new JToolBar();
+        barra.setFloatable(false);
+        barra.setBackground(Estilo.FUNDO);
+        barra.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(5, 8, 5, 8)));
+
+        conteudo.setBackground(Estilo.FUNDO);
+        ButtonGroup grupo = new ButtonGroup();
+
+        adicionarTela(barra, grupo, PAINEL, new PainelInicio(this));
+        adicionarTela(barra, grupo, ENTRADA, new PainelEntrada(this));
+        adicionarTela(barra, grupo, SAIDA, new PainelSaida(this));
+
+        // as telas de administrador nem sao criadas para o operador
+        if (Sessao.isAdmin()) {
+            JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
+            separador.setMaximumSize(new Dimension(12, 24));
+            barra.add(Box.createHorizontalStrut(4));
+            barra.add(separador);
+            adicionarTela(barra, grupo, VAGAS, new PainelVagas(this));
+            adicionarTela(barra, grupo, USUARIOS, new PainelUsuarios(this));
         }
+
+        barra.add(Box.createHorizontalGlue());
+        JLabel quem = Estilo.rotulo(usuario == null ? "" : usuario.nome() + " (" + usuario.perfilDescricao() + ")",
+                Font.PLAIN, 13);
+        quem.setForeground(Estilo.TEXTO_SECUNDARIO);
+        quem.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        barra.add(quem);
+
+        JButton btnSair = Estilo.botaoPadrao("Sair", 13);
+        btnSair.addActionListener(e -> sair());
+        barra.add(btnSair);
+
+        barraStatus.setForeground(Estilo.TEXTO_SECUNDARIO);
+        JPanel rodape = new JPanel(new BorderLayout());
+        rodape.setBackground(Estilo.FUNDO);
+        rodape.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(1, 0, 0, 0, new java.awt.Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(3, 10, 3, 10)));
+        rodape.add(barraStatus, BorderLayout.WEST);
+
+        getContentPane().add(barra, BorderLayout.NORTH);
+        getContentPane().add(conteudo, BorderLayout.CENTER);
+        getContentPane().add(rodape, BorderLayout.SOUTH);
+
+        mostrar(PAINEL);
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
-
-        pnlMonitor = new javax.swing.JPanel();
-        lblveiculos = new javax.swing.JLabel();
-        lblvagas = new javax.swing.JLabel();
-        veiculosnum = new javax.swing.JLabel();
-        vagasnum = new javax.swing.JLabel();
-        btnEntrada = new javax.swing.JButton();
-        lblEstacionamento = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenuCadastros = new javax.swing.JMenu();
-        jMenuItemListagemUsuarios = new javax.swing.JMenuItem();
-        jMenuItemCadastrarUsuario = new javax.swing.JMenuItem();
-        jMenuItemListagemVeiculos = new javax.swing.JMenuItem();
-        jMenuItemCadastrarVeiculo = new javax.swing.JMenuItem();
-        jMenuItemListagemEstacionamento = new javax.swing.JMenuItem();
-        jMenuItemCadastrarEstacionamento = new javax.swing.JMenuItem();
-        jMenuOperacoes = new javax.swing.JMenu();
-        jMenuItemEntrada = new javax.swing.JMenuItem();
-        jMenuItemSaida = new javax.swing.JMenuItem();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        jMenuCadastros.setText("Cadastros");
-
-        jMenuItemListagemUsuarios.setText("Listagem Usuarios");
-        jMenuItemListagemUsuarios.addActionListener(this::abrirListagemUsuarios);
-        jMenuCadastros.add(jMenuItemListagemUsuarios);
-
-        jMenuItemCadastrarUsuario.setText("Cadastrar Usuario");
-        jMenuItemCadastrarUsuario.addActionListener(this::abrirCadastroUsuario);
-        jMenuCadastros.add(jMenuItemCadastrarUsuario);
-
-        jMenuItemListagemVeiculos.setText("Listagem Veiculos");
-        jMenuItemListagemVeiculos.addActionListener(this::abrirEntradaVeiculo);
-        jMenuCadastros.add(jMenuItemListagemVeiculos);
-
-        jMenuItemCadastrarVeiculo.setText("Cadastrar Veiculo");
-        jMenuItemCadastrarVeiculo.addActionListener(this::abrirEntradaVeiculo);
-        jMenuCadastros.add(jMenuItemCadastrarVeiculo);
-
-        jMenuItemListagemEstacionamento.setText("Listagem Estacionamento");
-        jMenuItemListagemEstacionamento.addActionListener(this::abrirEntradaVeiculo);
-        jMenuCadastros.add(jMenuItemListagemEstacionamento);
-
-        jMenuItemCadastrarEstacionamento.setText("Cadastrar Estacionamento");
-        jMenuItemCadastrarEstacionamento.addActionListener(this::abrirEntradaVeiculo);
-        jMenuCadastros.add(jMenuItemCadastrarEstacionamento);
-
-        jMenuBar1.add(jMenuCadastros);
-
-        jMenuOperacoes.setText("Operacoes");
-
-        jMenuItemEntrada.setText("Entrada de Veiculo");
-        jMenuItemEntrada.addActionListener(this::abrirEntradaVeiculo);
-        jMenuOperacoes.add(jMenuItemEntrada);
-
-        jMenuItemSaida.setText("Saida de Veiculo");
-        jMenuItemSaida.addActionListener(this::abrirEntradaVeiculo);
-        jMenuOperacoes.add(jMenuItemSaida);
-
-        jMenuBar1.add(jMenuOperacoes);
-        setJMenuBar(jMenuBar1);
-
-        pnlMonitor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lblveiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/carro.png"))); // NOI18N
-        lblveiculos.setText("Veículos Estacionados");
-
-        lblvagas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vagas.png"))); // NOI18N
-        lblvagas.setText("Vagas Disponíveis");
-
-        veiculosnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        veiculosnum.setText("N.º");
-        veiculosnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        vagasnum.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        vagasnum.setText("N.º");
-        vagasnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout pnlMonitorLayout = new javax.swing.GroupLayout(pnlMonitor);
-        pnlMonitor.setLayout(pnlMonitorLayout);
-        pnlMonitorLayout.setHorizontalGroup(
-            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMonitorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlMonitorLayout.createSequentialGroup()
-                        .addComponent(lblveiculos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addComponent(lblvagas))
-                    .addGroup(pnlMonitorLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(veiculosnum)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(vagasnum)
-                        .addGap(38, 38, 38)))
-                .addContainerGap())
-        );
-        pnlMonitorLayout.setVerticalGroup(
-            pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMonitorLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(veiculosnum, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(vagasnum, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlMonitorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblveiculos)
-                    .addComponent(lblvagas))
-                .addGap(14, 14, 14))
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 19;
-        gridBagConstraints.ipady = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 31, 0, 33);
-        getContentPane().add(pnlMonitor, gridBagConstraints);
-
-        btnEntrada.setBackground(new java.awt.Color(36, 105, 224));
-        btnEntrada.setForeground(new java.awt.Color(255, 255, 255));
-        btnEntrada.setText("ENTRADA");
-        btnEntrada.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEntradaMouseClicked(evt);
-            }
-        });
-        btnEntrada.addActionListener(this::btnEntradaActionPerformed);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 40;
-        gridBagConstraints.ipady = 18;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 129, 39, 0);
-        getContentPane().add(btnEntrada, gridBagConstraints);
-
-        lblEstacionamento.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        lblEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEstacionamento.setText("Estacionamento");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(38, 31, 0, 33);
-        getContentPane().add(lblEstacionamento, gridBagConstraints);
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        Tela_Entrada TelaDeEntrada = new Tela_Entrada();
-        TelaDeEntrada.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnEntradaActionPerformed
-
-    private void btnEntradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntradaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEntradaMouseClicked
-
-    private void abrirListagemUsuarios(java.awt.event.ActionEvent evt) {
-        new Listagem_cadastro().setVisible(true);
-        this.dispose();
+    private void adicionarTela(JToolBar barra, ButtonGroup grupo, String nome, JPanel tela) {
+        JToggleButton botao = Estilo.botaoBarra(nome);
+        botao.addActionListener(e -> mostrar(nome));
+        grupo.add(botao);
+        barra.add(botao);
+        barra.add(Box.createHorizontalStrut(2));
+        botoes.put(nome, botao);
+        telas.put(nome, (Atualizavel) tela);
+        conteudo.add(tela, nome);
     }
 
-    private void abrirCadastroUsuario(java.awt.event.ActionEvent evt) {
-        new Tela_Cadastro().setVisible(true);
-        this.dispose();
-    }
-
-    private void abrirEntradaVeiculo(java.awt.event.ActionEvent evt) {
-        new Tela_Entrada().setVisible(true);
-        this.dispose();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+    public void mostrar(String nome) {
+        Atualizavel tela = telas.get(nome);
+        if (tela == null) {
+            return; // tela de admin pedida por quem nao e admin
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Tela_Principal().setVisible(true));
+        if (telaAtual != null && !telaAtual.equals(nome)) {
+            telas.get(telaAtual).aoSair();
+        }
+        telaAtual = nome;
+        botoes.get(nome).setSelected(true);
+        cartoes.show(conteudo, nome);
+        tela.aoMostrar();
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntrada;
-    private javax.swing.JLabel lblEstacionamento;
-    private javax.swing.JLabel lblvagas;
-    private javax.swing.JLabel lblveiculos;
-    private javax.swing.JPanel pnlMonitor;
-    private javax.swing.JLabel vagasnum;
-    private javax.swing.JLabel veiculosnum;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuCadastros;
-    private javax.swing.JMenuItem jMenuItemListagemUsuarios;
-    private javax.swing.JMenuItem jMenuItemCadastrarUsuario;
-    private javax.swing.JMenuItem jMenuItemListagemVeiculos;
-    private javax.swing.JMenuItem jMenuItemCadastrarVeiculo;
-    private javax.swing.JMenuItem jMenuItemListagemEstacionamento;
-    private javax.swing.JMenuItem jMenuItemCadastrarEstacionamento;
-    private javax.swing.JMenu jMenuOperacoes;
-    private javax.swing.JMenuItem jMenuItemEntrada;
-    private javax.swing.JMenuItem jMenuItemSaida;
-    // End of variables declaration//GEN-END:variables
+    public void status(String texto) {
+        barraStatus.setText(texto);
+    }
+
+    private void sair() {
+        if (telaAtual != null) {
+            telas.get(telaAtual).aoSair();
+        }
+        Sessao.encerrar();
+        new Tela_Login().setVisible(true);
+        dispose();
+    }
 }
