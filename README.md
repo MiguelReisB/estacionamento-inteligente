@@ -71,7 +71,6 @@ cd estacionamento-inteligente
 
 2. Abra o projeto em sua IDE Java de preferência (NetBeans, IntelliJ IDEA, VS Code ou Eclipse).
 
----
 
 ---
 
